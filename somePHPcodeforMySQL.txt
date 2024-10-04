@@ -1,0 +1,151 @@
+Very important that the ` is the top left key on keyboard.
+If use the ' (which is on right hand side with @, the SELECT doesn't work.
+Only use around table names NOT when refering to a table.column  ! 
+(The error message will say "Unknown column in field list"
+
+
+getting last ID source w3 (not what the manual says)
+
+if ($conn->query($sql) === TRUE) {
+    $last_id = $conn->insert_id;
+    echo "New record created successfully. Last inserted ID is: " . $last_id;
+  } else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
+  }
+
+
+$sql = "UPDATE `members` SET `MEmail` = \'dev@TandM.com\', `MUserName` = \'LoneDeveloper\' WHERE `members`.`MId` = 1;";
+UPDATE `members` SET `MEmail` = 'dev@TandM.com', `MUserName` = 'LoneDeveloper' WHERE `members`.`MId` = 1;
+
+
+$sql = "SELECT COUNT(TSId) FROM `tasksstages` WHERE 1;";
+SELECT COUNT(TSId) FROM `tasksstages` WHERE 1;
+
+
+$sql = "SELECT * FROM `tasksheader`;";  (the whole of a table)
+SELECT * FROM `tasksheader`;
+
+$sql = "SELECT `THId`,`TaskName` FROM `tasksheader`;";
+SELECT `THId`,`TaskName` FROM `tasksheader`;
+
+
+
+$sql = "SELECT * FROM `tasklist` WHERE `TLId` = 5;";
+
+SELECT * FROM `tasklist` WHERE `TLId` = 5;   is same thing in SQL
+
+
+
+$sql = "SELECT * FROM `tasklist` WHERE `TaskId` =3;";
+
+SELECT * FROM `tasklist` WHERE `TaskId` =3;
+
+
+
+$sql = "SELECT * FROM `tasksstages` WHERE `TaskId`=2;";
+SELECT * FROM `tasksstages` WHERE `TaskId`=2;
+
+
+$sql = "SELECT `TSId`,`TaskId`,`StageName`,`StageDesc`,`StageAuthor`   FROM `tasksstages`\n"
+
+    . "WHERE `TaskId`=3;";
+
+SELECT `TSId`,`TaskId`,`StageName`,`StageDesc`,`StageAuthor` FROM `tasksstages` WHERE `TaskId`=3;
+
+
+Using foreign key to find extra info from 2nd table
+SELECT tasksheader.THId, tasksheader.TaskName, members.MUserName  AS AUTHORS   FROM `tasksheader`, `members`
+WHERE tasksheader.TaskAuthor=members.MId
+
+$sql = "SELECT tasksheader.THId, tasksheader.TaskName, members.MUserName  AS AUTHORS 
+FROM `tasksheader`, `members` WHERE tasksheader.TaskAuthor=members.MId;";
+
+
+Display content of tasklist + taskname from taskheader
+SELECT tasklist.TLId, tasklist.TaskId,tasklist.Stage, tasklist.StudentId, tasklist.ManagerId, 
+tasksheader.TaskName   
+FROM `tasklist`
+INNER JOIN tasksheader ON
+tasklist.TaskId=tasksheader.THId;
+
+how to also display student from members???
+
+
+Full display of Tasklist: (including the actual contents)
+
+SELECT tasklist.TLId, tasklist.TaskId,tasklist.Stage, tasklist.StudentId, tasklist.ManagerId, 
+tasksheader.TaskName, membersSt.MUserName AS Student, membersMan.MUserName AS Manager 
+FROM `tasklist` 
+INNER JOIN tasksheader ON tasklist.TaskId=tasksheader.THId 
+INNER JOIN members AS membersSt ON tasklist.StudentId=membersSt.MId 
+INNER JOIN members AS membersMan ON tasklist.ManagerId=membersMan.MId;
+
+$sql = "SELECT tasklist.TLId, tasklist.TaskId,tasklist.Stage, tasklist.StudentId, tasklist.ManagerId, \n"
+
+    . "tasksheader.TaskName,\n"
+
+    . "membersSt.MUserName AS Student,\n"
+
+    . "membersMan.MUserName AS Manager\n"
+
+    . "FROM `tasklist`\n"
+
+    . "INNER JOIN tasksheader ON\n"
+
+    . "tasklist.TaskId=tasksheader.THId\n"
+
+    . "INNER JOIN members AS membersSt  ON\n"
+
+    . "tasklist.StudentId=membersSt.MId\n"
+
+    . "INNER JOIN members AS membersMan ON\n"
+
+    . "tasklist.ManagerId=membersMan.MId;";
+
+
+Task list for specific student
+
+SELECT tasklist.TLId, tasklist.TaskId,tasklist.Stage, tasklist.StudentId, tasklist.ManagerId, 
+tasksheader.TaskName, membersSt.MUserName AS Student, membersMan.MUserName AS Manager 
+FROM `tasklist`
+INNER JOIN tasksheader ON tasklist.TaskId=tasksheader.THId
+INNER JOIN members AS membersSt ON tasklist.StudentId=membersSt.MId AND StudentId="2"
+INNER JOIN members AS membersMan ON tasklist.ManagerId=membersMan.MId;
+
+$sql = "SELECT tasklist.TLId, tasklist.TaskId,tasklist.Stage, tasklist.StudentId, tasklist.ManagerId, \n"
+
+    . "tasksheader.TaskName, membersSt.MUserName AS Student, membersMan.MUserName AS Manager \n"
+
+    . "FROM `tasklist`\n"
+
+    . "INNER JOIN tasksheader ON tasklist.TaskId=tasksheader.THId\n"
+
+    . "INNER JOIN members AS membersSt ON tasklist.StudentId=membersSt.MId AND StudentId=\"5\"\n"
+
+    . "INNER JOIN members AS membersMan ON tasklist.ManagerId=membersMan.MId;";
+
+Put data in taskheader
+INSERT INTO `tasksheader`(`TaskName`, `TaskDesc`, `TaskAuthor`) 
+VALUES ('[value-2]','[value-3]','[value-4]');
+$sql = "INSERT INTO `tasksheader`(`TaskName`, `TaskDesc`, `TaskAuthor`) VALUES ('[value-2]','[value-3]','[value-4]')";
+
+
+
+
+Tasklist by tasklist number TLId
+SELECT tasklist.TLId, tasklist.TaskId,tasklist.Stage, tasklist.StudentId, tasklist.ManagerId,tasksheader.TaskName, membersSt.MUserName AS Student, membersMan.MUserName AS Manag FROM `tasklist`INNER JOIN tasksheader ON tasklist.TaskId=tasksheader.THId AND TLId='3' INNER JOIN members AS membersSt ON tasklist.StudentId=membersSt.MId INNER JOIN members AS membersMan ON tasklist.ManagerId=membersMan.MId;
+$sql = "SELECT tasklist.TLId, tasklist.TaskId,tasklist.Stage, tasklist.StudentId, tasklist.ManagerId,tasksheader.TaskName, membersSt.MUserName AS Student, membersMan.MUserName AS Manag FROM `tasklist`INNER JOIN tasksheader ON tasklist.TaskId=tasksheader.THId AND TLId=\'3\' INNER JOIN members AS membersSt ON tasklist.StudentId=membersSt.MId INNER JOIN members AS membersMan ON tasklist.ManagerId=membersMan.MId;";
+
+Tasklist by task number TaskId
+SELECT tasklist.TLId, tasklist.TaskId,tasklist.Stage, tasklist.StudentId, tasklist.ManagerId,tasksheader.TaskName, membersSt.MUserName AS Student, membersMan.MUserName AS Manag FROM `tasklist`INNER JOIN tasksheader ON tasklist.TaskId=tasksheader.THId AND TaskId='3' INNER JOIN members AS membersSt ON tasklist.StudentId=membersSt.MId INNER JOIN members AS membersMan ON tasklist.ManagerId=membersMan.MId;
+$sql = "SELECT tasklist.TLId, tasklist.TaskId,tasklist.Stage, tasklist.StudentId, tasklist.ManagerId,tasksheader.TaskName, membersSt.MUserName AS Student, membersMan.MUserName AS Manag FROM `tasklist`INNER JOIN tasksheader ON tasklist.TaskId=tasksheader.THId AND TaskId=\'3\' INNER JOIN members AS membersSt ON tasklist.StudentId=membersSt.MId INNER JOIN members AS membersMan ON tasklist.ManagerId=membersMan.MId;";
+
+
+
+UPDATE
+UPDATE `tasksstages` SET `TaskId` = '115' WHERE `tasksstages`.`TSId` = 34;
+
+UPDATE `tasksstages` SET `StageName` = 'Email student', `StageDesc` = 'Email confirmation to be sent to the student that the task has been assigned.' WHERE `tasksstages`.`TSId` = 9;
+
+
+
