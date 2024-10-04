@@ -1,0 +1,73 @@
+
+* {/*makes a very slight horizontal change*/
+	box-sizing: border-box;
+}
+
+
+/*Makes task landscape (right-left)*/
+.task {
+	background-color: #fff;
+	border-radius: 10px;
+	box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+	display: flex;
+	max-width: 100%;
+	margin: 20px;
+	overflow: hidden;
+	width: 700px;
+}
+
+.task h6 {
+	opacity: 0.6;
+	margin: 0;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+}
+
+.task h2 {
+	letter-spacing: 1px;
+	margin: 10px 0;
+}
+
+/*Makes laft side header coloured*/
+.task-header {
+	background-color: #2A265F;
+	color: #fff;
+	padding: 30px;
+	max-width: 250px;
+}
+
+/*Makes right side (stage)  tidy*/
+.task-stage {
+	padding: 30px;
+	position: relative;
+	width: 100%;
+}
+
+/*adjusts position of bar background */
+.progress-container {
+	position: absolute;
+	top: 30px;
+	right: 30px;
+	text-align: right;
+	width: 150px;
+}
+
+/*progress bar % completed*/
+.progress::after {
+	border-radius: 3px;
+	background-color: #2A265F;
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 5px;
+	width: 66%;
+}
+
+/*styling of the progress words*/
+.progress-text {
+padding:1px;
+	font-size: 10px;
+	opacity: 0.8;
+	letter-spacing: 1px;
+}
