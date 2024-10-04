@@ -1,0 +1,89 @@
+javascript
+
+Below works 20:52 25 Sept 2024
+
+function showThankYou(){
+  prism.style.transform = "translateZ(-100px) rotateX( 90deg)";
+    
+  var request= new XMLHttpRequest();
+  request.onreadystatechange = function()
+  {
+    if (this.readyState == 4 && this.status == 200)
+    {
+    //must call response text?  Have I left something out? Wierd, if I comment this like out the script fails
+    document.getElementById("panel").innerHTML+="<br>Db, this.responseText:<br> "+ request.responseText +"<br>";
+    }
+    else{document.getElementById("panel").innerHTML+="Else "+this.request.responseText +"<br>"};
+  }
+  //the request is now to be started with method POST, the url of where the PHP script is, & asynchronous=true
+  request.open("POST", "../test/QueryDbTest.php", true);
+  //the server needs some extra data
+  request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded"); //??????
+  request.send(); 
+
+}
+
+=====================================
+
+function createHeader(){
+             
+//Extract data from web page form & prepare for building a string that is safe to send. 
+var str, 
+ userName= encodeURIComponent(document.getElementById("name").value) , 
+ describe= encodeURIComponent(document.getElementById("describe").value), 
+ author=   encodeURIComponent(document.getElementById("author").value);
+ document.getElementById("panel").innerHTML="js createHeader 2 "; 
+
+var request= new XMLHttpRequest();
+
+str="userName="+ userName;
+str+="&desc="+ describe;
+str+="&author="+ author;
+
+document.getElementById("panel").innerHTML="js createHeader has str=<br>  "+str; //dev feedback
+
+//the call to the server will be asynchronous & checked for notification of completion. readystate starts at 0 & goes to 4 when complete
+//the server returns a ststus of 200 if the task was run or an error code of 400, 401, 403 
+request.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200){
+  //must call response text?  Have I left something out? Wierd, if I comment this like out the script fails
+  document.getElementById("panel").innerHTML+="<br> CreateTaskheader, this.responseText:<br> "+ request.responseText +"<br>";
+} 
+   
+}
+
+//the request is now to be started with method POST, the url of where the PHP script is, & asynchronous=true
+request.open("POST", "insert_taskheader.php", true);
+//the serve needs some extra data
+request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded"); //??????
+
+//the data is sent in str which is formatted like an indexed array  label1=" value1 +"&label2=" value2
+request.send(str);  // <<<<<<<<<<<<<<<<<<<<<
+}
+
+===============================
+php
+
+<?php
+
+echo "<p> <i>PHP file called: insert_taskheader.php </i> which echo:<br>";
+// This is just a test echo of inputs
+
+//echo "empty?".empty($_POST)."<";
+$str = $_POST['userName'];
+$str = "<strong>". $str . "</strong></p>";
+echo $str;
+$str = $_POST['desc'];
+$str = "<strong>". $str . "</strong></p>";
+echo $str;
+$str = $_POST['author'];
+$str = "<strong>". $str . "</strong></p>";
+echo $str;
+
+//the insert code has not yet been tested 22:53 16 Sept 2024
+
+echo 'Try to insert<br> Need to connect then run this:<br> 
+$sql = "INSERT INTO `tasksheader`(`TaskName`, `TaskDesc`, `TaskAuthor`) VALUES (\'[value-2]\',\'[value-3]\',\'[value-4]\');";  ';  
+?>
+
+
