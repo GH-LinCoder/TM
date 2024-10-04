@@ -1,0 +1,72 @@
+<html>
+    <head>
+      <head>
+        <meta charset="UTF-8">
+        <title>Role Choice</title>
+        <link rel="stylesheet" href="./style.css">
+       <link rel="icon" href="../favicons/favicon.ico" type="image/icon type">
+      </head>
+    </head>
+    <body>
+      
+      <div class="row">
+    <div class="col-md-12">
+      <form action="index.html" method="post">
+        <h1> Role choice </h1>
+        
+      <fieldset name="role">         
+<legend><span class="number">1</span> Your preferred Role</legend>    
+          <label>Choose your role. (Can be changed later):</label>
+        
+          <input type="radio" id="passive" value="passive" name="role"><label for="passive" class="light"><strong>Passive:</strong> Only read, watch, but not meeting, marching or managing.</label>
+<br>
+          <input type="radio" id="online" value="online" name="role"><label for="online" class="light"><strong>Online:</strong> Also making comments on social media, but nothing in person & not going to meetings</label>
+<br>          
+          <input type="radio" id="local" value="local" name="role"><label for="local" class="light"><strong>Local:</strong> Also going to meetings or events in a nearby town, but won't travel far.</label>
+<br>          
+          <input type="radio" id="national" value="national" name="role"><label for="national" class="light"><strong>National:</strong> Also going to London or wherever needed, particpate in events almost anywhere. </label>
+<br>          
+         <input type="radio" id="manager" value="manager" name="role"><label for="manager" class="light"><strong>Manager:</strong> Want to be involved in organising and managing.</label>
+<p>  
+
+<label for="comments">Anything we should know about your role:</label></p>
+          <textarea id="role_comments" name="role_comments"></textarea>
+      </fieldset>
+
+      <fieldset name ="towns">        
+        <legend><span class="number">2</span> Towns you would travel to</legend>      
+          <label for="town1">Town nearest you:</label>
+          <input type="text" id="town1" name="town1">
+                    <label for="town2">Town near you:</label>
+          <input type="text" id="town2" name="town2">
+          <label for="town3">Major town you would go to:</label>
+          <input type="text" id="town3" name="town3">
+        </fieldset>
+        <fieldset>
+          <legend><span class="number">3</span> Your comments</legend>
+          
+           <label for="suggestions">Anything we should know about you or your suggestions:</label>
+          <textarea id="suggestions" name="suggestions"></textarea>
+        
+      </fieldset>
+   
+      <fieldset name="details">  
+        <legend><span class="number">4</span> Your details</legend>
+        <label for="name">User Name:</label>
+        <input type="text" id="name" name="user_name">    
+        <label for="email">Email:</label>
+        <input type="email" id="mail" name="user_email">
+     
+        <label for="password">Password:</label>
+        <input type="password" id="password"       name="user_password">
+                       
+     </fieldset>
+
+        <button type="submit">Send</button>
+        
+       </form>
+        </div>
+      </div>
+      
+    </body>
+</html>
