@@ -1,4 +1,4 @@
-T&M = "Task & Management"
+T&M = "Task & Member"
 
 A database driven website to manage a membership system with task management (based on my use of Nationbuilder & Trello, but much more basic.)
 [The task management is for training and organising of the members to create a self managed community.]
