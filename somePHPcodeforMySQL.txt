@@ -3,6 +3,8 @@ If use the ' (which is on right hand side with @, the SELECT doesn't work.
 Only use around table names NOT when refering to a table.column  ! 
 (The error message will say "Unknown column in field list"
 
+ALTER TABLE `tasksstages` CHANGE `StageDate` `StageDate` TIMESTAMP NOT NULL;
+
 
 getting last ID source w3 (not what the manual says)
 
