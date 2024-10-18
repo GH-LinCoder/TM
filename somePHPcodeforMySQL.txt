@@ -15,6 +15,50 @@ if ($conn->query($sql) === TRUE) {
     echo "Error: " . $sql . "<br>" . $conn->error;
   }
 
+count of all tables & unique students & managers
+
+
+SELECT
+    COUNT(members.MId) AS countMembers,
+    COUNT(tasksheader.THId) AS countTasksheaders,
+    COUNT(tasksStages.TSId) AS countTasksStages,
+    COUNT(taskList.TLId) AS countTaskList,
+    COUNT(DISTINCT taskList.studentId) AS uniqueStudents,
+    COUNT(DISTINCT taskList.managerId) AS uniqueManagers
+FROM members
+LEFT JOIN taskList ON members.MId = taskList.studentId
+LEFT JOIN tasksheader ON tasksheader.THId = taskList.TLId
+LEFT JOIN tasksStages ON tasksStages.TSId = taskList.TLId;
+
+php version  
+
+$sql = "SELECT\n"
+
+    . "    COUNT(members.MId) AS countMembers,\n"
+
+    . "    COUNT(tasksheader.THId) AS countTasksheaders,\n"
+
+    . "    COUNT(tasksStages.TSId) AS countTasksStages,\n"
+
+    . "    COUNT(taskList.TLId) AS countTaskList,\n"
+
+    . "    COUNT(DISTINCT taskList.studentId) AS uniqueStudents,\n"
+
+    . "    COUNT(DISTINCT taskList.managerId) AS uniqueManagers\n"
+
+    . "FROM members\n"
+
+    . "LEFT JOIN taskList ON members.MId = taskList.studentId\n"
+
+    . "LEFT JOIN tasksheader ON tasksheader.THId = taskList.TLId\n"
+
+    . "LEFT JOIN tasksStages ON tasksStages.TSId = taskList.TLId;";
+
+the above php failed
+
+
+
+
 
 $sql = "UPDATE `members` SET `MEmail` = \'dev@TandM.com\', `MUserName` = \'LoneDeveloper\' WHERE `members`.`MId` = 1;";
 UPDATE `members` SET `MEmail` = 'dev@TandM.com', `MUserName` = 'LoneDeveloper' WHERE `members`.`MId` = 1;
@@ -143,6 +187,7 @@ SELECT tasklist.TLId, tasklist.TaskId,tasklist.Stage, tasklist.StudentId, taskli
 $sql = "SELECT tasklist.TLId, tasklist.TaskId,tasklist.Stage, tasklist.StudentId, tasklist.ManagerId,tasksheader.TaskName, membersSt.MUserName AS Student, membersMan.MUserName AS Manag FROM `tasklist`INNER JOIN tasksheader ON tasklist.TaskId=tasksheader.THId AND TaskId=\'3\' INNER JOIN members AS membersSt ON tasklist.StudentId=membersSt.MId INNER JOIN members AS membersMan ON tasklist.ManagerId=membersMan.MId;";
 
 
+INSERT INTO `tasksstages` (`TaskId`,`StageNum`,`StageName`,`StageDesc`,`StageAuthor`)  VALUES ('2','2','Losing hope','How to struggle','2');
 
 UPDATE
 UPDATE `tasksstages` SET `TaskId` = '115' WHERE `tasksstages`.`TSId` = 34;
