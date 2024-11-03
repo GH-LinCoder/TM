@@ -1,0 +1,309 @@
+* {
+	box-sizing: border-box;
+}
+
+/*Makes task landscape (right-left)*/
+.course {
+	background-color: rgb(255, 255, 221);
+	border-radius: 10px;
+	box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+	display: flex;
+	max-width: 100%;
+	margin: 10px;
+	overflow: hidden;
+	width: 98%;
+}
+
+.course h6 {
+	opacity: 0.6;
+	margin: 0;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+}
+
+.course h2 {
+	letter-spacing: 1px;
+	margin: 10px 5px;
+}
+
+/*Makes left side header coloured*/
+.task-left {
+	background-color: rgb(42, 38, 95);
+	color: #fff;
+	padding: 30px;
+	max-width: 80px;
+}
+
+
+/*Makes left side stage coloured & text same as task background*/
+.stage-left {
+	background-color: rgb(190, 180, 255);
+	color: rgb(42, 38, 95);
+	padding: 30px;
+	max-width: 250px;
+}
+
+
+
+#SLId, #THId{
+	opacity: 0.6;
+	position:absolute;
+	right:5px;
+	padding:1px;
+	font-size:0.8em;
+		
+}
+
+
+/*Makes right side (stage)  tidy*/
+.course-info {
+	padding: 30px;
+	position: relative;
+	width: 100%;
+}
+/*Makes description section limited width*/
+.stage-info {
+	padding: 30px;
+	position: relative;
+	width: 95%;
+}
+
+/*Makes stage number section small*/
+.stageNumber-info {
+	padding: 5px;
+	position: relative;
+	right:3px;
+	width: 15%;
+
+}
+/*when the displayed stage number == where the student is currently the color changes with a rounded background */
+.stageNumber{	
+	border-radius:10px;	
+	font-size:4em;
+	text-align:center;
+	border:solid;
+	cursor: pointer;
+	}
+
+/*adjusts position of progress bar background */
+.progress-container {
+	padding: 6px 0px;
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+	text-align: right;
+	width: 150px;
+    /*Show size of 100% in a thin grey line*/
+	border-top-width:1px;
+    border-top:solid;
+	border-top-color: #e0e0e0;
+}
+
+/*progress bar % completed*/
+.progress::after {
+	border-radius: 3px;
+	background-color: #2A265F;
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 3px;
+	width: 66%;
+}
+
+/*styling of the progress words*/
+.progress-text {
+	font-size: 14px;
+	opacity: 0.6;
+	letter-spacing: 1px;
+}
+
+/*The Previous & Next buttons for stage number*/
+.btn {
+	background-color: #5A5050;
+	border: 0;
+	border-radius: 5px;
+	box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+	color: #fff;
+	font-size: 12px;
+	padding: 3px 4px;
+	position: relative;
+    width:65px;
+	letter-spacing: 1px;
+	cursor: pointer;
+}
+/*Button goes white on hover*/
+.btn:hover {
+	background-color: #ffffff;
+	color: #001F61;
+}
+
+
+
+
+/* Sliding PANEL*/
+.sliding-panel-container {
+	position: fixed;
+	right: 0;
+	top: 15px;
+	transform: translateX(100%);/*how far moves*/
+	transition: transform 0.4s ease-in-out;
+	border:1px,inset,#2A265F;
+	border-radius: 10px;
+	background-color:#cbc7FF;
+	width: 95%;
+
+}
+.list-sliding-panel-container {
+	position: fixed;
+	right: 0;
+	
+	transform: translateX(100%);/*how far moves*/
+	transition: transform 0.4s ease-in-out;
+	border:1px,inset,#2A265F;
+	border-radius: 10px;
+	bottom: 60px;
+	height: 300px;
+	width: 95%;
+
+	background-color: rgb(203, 199, 170);
+
+}
+
+/*without this the panel is never seen*/
+.sliding-panel-container.visible, .list-sliding-panel-container.visible {
+	transform: translateX(-10px); /*shifts position away from right side of window*/
+}
+
+/*The open close button*/
+.card-floating-btn {
+	border-radius: 10px;
+	background-color: #cbc7FF;
+	border: 1px inset #2A265F;
+	box-shadow: 0 16px 22px -17px #03153B;
+	color: #2A265F;
+	cursor: pointer;
+	font-size: 24px;
+	line-height: 20px;
+	padding: 12px 20px;
+	position: absolute;
+	bottom: 10px;
+	left: 40px;
+	z-index: 999;
+}
+
+
+/*The open close button*/
+.list-floating-btn {
+	border-radius: 10px;
+    background-color: rgb(203, 199, 170);
+	border: 1px inset #2A265F;
+	box-shadow: 0 16px 22px -17px #03153B;
+	color: #2A265F;
+	cursor: pointer;
+	font-size: 24px;
+	line-height: 20px;
+	padding: 12px 20px;
+	position: absolute;
+	bottom: 10px;
+	right: 40px;
+	z-index: 999;
+}
+.list-floating-btn:hover{background-color: #ffffff;
+	color: #001F61;
+}
+
+.card-floating-btn:hover {
+	background-color: #ffff;
+	color: #001F61;
+}
+
+/* .listRow has no effect?  
+.listRow{
+	border-radius: 5px;
+	box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+	display: flex;
+	max-width: 100%;
+	margin: 5px;
+	padding:1px;
+	overflow: hidden;
+	width: 90%;
+}
+*/
+
+.listRow:hover{scale:1.01;
+background-color:lightgrey;}
+
+
+
+@media screen and (max-width: 480px) {
+
+	.sliding-panel-container.visible {
+		transform: translateX(0px);
+	}
+	
+	.floating-btn {
+		right: 10px;
+	}
+}
+
+/*Table style */
+
+.table{
+	width:100%;
+	padding:3px;
+	border-radius: 10px;
+    background-color: rgb(203, 199, 170);
+	box-shadow: 0 16px 22px -17px #03153B;
+	color: #2A265F;
+	
+	font-size: 14px;
+}
+
+.headerRow{
+	font-weight: bold;
+	background-color: #2A265F;
+	color: #fff;
+}
+
+
+
+.table-cell{
+	word-break: break-all;
+  border-top: 1px solid #ddd;
+
+}
+
+.table-cell:hover{
+	color:green;
+	cursor: pointer;
+}
+
+.table-row:hover{
+	scale:1.01;
+	background-color:#bbb;
+}
+
+.tableListNav{
+	border-radius: 6px;
+    position:absolute;
+	bottom: 5px;
+	left:15%;
+	color: #2A265F;
+	width:70%;
+	cursor: default;/* No effect? */
+}
+
+.table-cell{
+	word-break: normal;
+}
+
+
+
+#pageDisplayed, #pageTotal{/*Page 6 of 12 or something like that. To the left of nav page buttons */
+opacity: 0.6;
+	position:relative;
+	left:5px;
+	padding-right:10px;
+	font-size:0.8em;
+}

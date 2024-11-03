@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Task Card-table js create</title>
+  <link rel="stylesheet" href="../Dashboard/style.css">
+  <link rel="icon" href="../favicons/favicon.ico" type="image/icon type">
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<!--div><button class="card-floating-btn">
+	<b> #</b><!-- icon for a card -->
+	<!--i> Open or close a card view</i></font>
+	</button></div-->
+
+<!-- Task & stage sliding PANEL HTML -->
+<div class="sliding-panel-container" id="cardSlider">
+	
+<!-- js creates a header card design that used to be here-->
+	
+<!-- js creates a stage card design that user to be here-->
+			
+</div> <!-- closes the sliding panel div-->		
+					
+<!--                     Floating button for list view   -->		
+<!--div><button class="list-floating-btn">
+		 <b>=</b><!-- icon for a list -->
+<!--i> Open or close a List view</i>    </font></font>
+		</button></div-->
+	
+<!--                  List sliding PANEL HTML       -->
+
+<div class="list-sliding-panel-container" id='listSlider'>
+<div id="table">
+<!-- This is empty in html. Javascript will build a table based on the data retrieved from the database & put it here -->	
+</div><!--end of blank javascript table-->
+	
+	
+<!--div class="list-nav"-->
+<!-- this nav is on the floating list panel, below the javascript table -->
+	
+<!-- Nav buttons to call for next or previous pages of list rows-->
+	<!--table-->
+		<tr>
+			<!--td><h6>Page</h6></td>
+			<td  id="pageDisplayed">X </td>
+			<td><h6>of </h6></td>
+			<td  id="pageTotal">Y </td>
+			<td><h6>Pages</h6></td>
+	    <td><button class="btn" id="PageSkipBack100"> Skip  &lt&lt&lt&lt 100 pages</button></td>		
+	    <td><button class="btn" id="PageSkipBack10"> Skip &lt&lt 10 pages</button></td>
+		<td><button class="btn" id="PreviousPage"> Previous page</button></td>
+		<td ><div class="stageNumber" id="page">1</div></td>
+		<td><button class="btn" id="NextPage">Next page</button></td>
+<td><button class="btn" id="PagesSkipAhead10">Skip >> 10 pages</button></td>
+		<td><button class="btn" id="PagesSkipAhead100">Skip >>>> 100 pages</button></td>
+		</tr>
+	</table-->
+	
+</div> <!--end of list nav-->
+</div><!--end of list panel-->
+<!-- partial -->
+  <script  src="./script.js"></script>
+
+</body>
+</html>

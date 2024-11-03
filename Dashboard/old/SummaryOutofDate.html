@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard-students-managers-etc (prismatic)</title>
+  <link rel="stylesheet" href="./style.css">
+  <link rel="icon" href="../favicons/favicon.ico" type="image/icon type">
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<ul class="nav">
+  <li onclick="showStudents()">Students</li>
+  <li onclick="showManagers()">Managers</li>
+  <li onclick="showMembers()">Members</li>
+  <li onclick="showTasks()">Tasks</li>
+<li onclick="showSummary()">Summary</li>  
+  <li onclick="showManage()">Manage</li>
+</ul>
+
+<div class="wrapper">
+  <div class="rec-prism"><!-- The munus are on faces of a cube -->
+
+<!-- Dashboard shows a count of different parts of the database. How many members, how many students how many managers how many assigned tasks, how many created tasks & how these have changed in a period
+-->    
+            <!-- Student  -->
+<div class="face face-front">
+      <div class="content">
+        <h2>Student</h2>
+<div>
+     <input type="button" class="button" value="Total students [14] " onclick="showThankYou()">
+ </div>
+          
+<div>
+<!--How that total arose-->
+<input type="button" class="button" value="Change [2]" onclick="showThankYou()">       
+<!--new - gone-->
+<input type="button" class="button" value="New [2]" onclick="showThankYou()">
+<!--Gone--> 
+<input type="button" class="button" value="Gone [0]" onclick="showThankYou()">
+ </div>         
+ <div>         
+ <!--Possibly a search function-->
+ <input type="button" class="button" value="Search for Student" onclick="showThankYou()">      </div>       
+                    <h6>Click the button for details of that section</h6>    
+   </div>   <!--end of content-->
+</div> <!--end of face-->
+
+    
+    
+    
+  <div class="face face-right">
+      <div class="content">  
+        <form onsubmit="event.preventDefault()">
+        <h2>Task</h2>
+ <div>
+ <input type="button" class="button" value="Total tasks [34] " onclick="showThankYou()">
+ </div>          
+<div>
+<!--How that total arose-->
+<input type="button" class="button" value="Change [3]" onclick="showThankYou()">       
+<!--new - gone-->
+<input type="button" class="button" value="New [5]" onclick="showThankYou()">
+<!--Gone--> 
+<input type="button" class="button" value="Gone [2]" onclick="showThankYou()">
+                
+ </div>         
+ <div>         
+ <!--Possibly a search function-->
+ <input type="button" class="button" value="Search for Task" onclick="showThankYou()"> 
+                                </div>
+     <h2>Stages</h2>     
+ <div>
+ <input type="button" class="button" value="Total stages [82] " onclick="showThankYou()">
+ </div>          
+<div>
+<!--How that total arose-->
+<input type="button" class="button" value="Change [96]" onclick="showThankYou()">       
+<!--new - gone-->
+<input type="button" class="button" value="New [100]" onclick="showThankYou()">
+<!--Gone--> 
+<input type="button" class="button" value="Gone [4]" onclick="showThankYou()">
+ </div>         
+ <div>         
+ <!--Possibly a search function-->
+ <input type="button" class="button" value="Search for Stage" onclick="showThankYou()">      </div>         
+   
+ </div>
+ </div>
+
+    
+ <!--                       Manager              -->
+    
+ <div class="face face-left">
+  <div class="content">
+   <h2>Manager</h2>
+  <div>
+     <input type="button" class="button" value="Total Managers [4] " onclick="showThankYou()">
+ </div>
+          
+<div>
+<!--How that total arose-->
+<input type="button" class="button" value="Change [0]" onclick="showThankYou()">       
+<!--new - gone-->
+<input type="button" class="button" value="New [0]" onclick="showThankYou()">
+<!--Gone--> 
+<input type="button" class="button" value="Gone [0]" onclick="showThankYou()">
+ </div>         
+ <div>         
+ <!--Possibly a search function-->
+ <input type="button" class="button" value="Search for Manager" onclick="showThankYou()">      </div>     
+                    <h6>Click the button for details of that section</h6>
+  </div>
+ </div>   
+    
+    
+<!-- A search interface to find tasks by student or by task or by author 
+-->    
+    <div class="face face-back">
+      <div class="content">
+        <h2>Members</h2>
+          <div>
+     <input type="button" class="button" value="Total Members [114] " onclick="showThankYou()">
+ </div>          
+<div>
+<!--How that total arose-->
+<input type="button" class="button" value="Change [12]" onclick="showThankYou()">       
+<!--new - gone-->
+<input type="button" class="button" value="New [16]" onclick="showThankYou()">
+<!--Gone--> 
+<input type="button" class="button" value="Gone [4]" onclick="showThankYou()">
+ </div>         
+ <div>         
+ <!--Possibly a search function-->
+ <input type="button" class="button" value="Search for Member" onclick="showThankYou()">      </div>                   
+                      <h6>Click the button for details of that section</h6>
+      </div><!--content end-->
+    </div><!--face end-->
+
+
+    
+ <!-- A standard link to other management menus
+-->   
+    <div class="face face-top">
+      <div class="content">        
+        <h2>Link to management prism</h2>
+      
+        <small>Jump to management action cube<br></small>
+        <div>
+          <a href="../login/">Login </a> <small> signup,password,subscribe,contact</small><br>
+          <a href="../createTask/">Task Create  </a><small> stages,edit</small><br>
+          <a href="../assignTask/">Task Assign  </a><small> edit,progress,select</small><br>
+          <a href="../">Reports </a><small> search database</small><br>
+          <a href="../">Dashboard </a><small> stats, members, tasks</small><br>
+
+      </div>
+
+    </div>  
+  </div>    
+      
+      
+ <!-- Confirmed message - probably not used -->     
+    <div class="face face-bottom">
+      <div class="content">
+      
+                 <h2>Summary</h2>
+                 <div>
+                  <input type="button" class="button" id=memberSummary value="awaiting data" onclick="showMembers()">
+                  </div>          
+                  <div>
+                  <input type="button" class="button" id=studentSummary value="awaiting data" onclick="showStudents()">
+                  </div>          
+                  <div>
+                  <input type="button" class="button" id=managerSummary value="awaiting data" onclick="showManagers()">
+                  </div>
+                  <div>
+                  <input type="button" class="button" id=taskSummary value="awaiting data" onclick="showTasks()">
+                  
+                  <input type="button" class="button" id=stagesSummary value="awaiting data" onclick="showTasks()">
+                    <input type="button" class="button" id=tasklistSummary value="awaiting data" onclick="showTasklist()">
+        <h6>Click for details of a section</h6>
+      </div>
+    </div>
+  </div>
+</div>
+  <p> 
+  <div class="panel" id="panel">Panel placeholder - Manager Landing Page<p> Where is taskList ?</p></div>
+</p>
+<!-- partial -->
+  <script  src="./script.js"></script>
+
+</body>
+</html>
