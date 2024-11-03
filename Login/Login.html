@@ -51,17 +51,17 @@
         <h2>Sign up</h2>
         <form onsubmit="event.preventDefault()">
           <div class="field-wrapper">
-            <input type="text" name="email" placeholder="email">
+            <input type="text" id="email" name="email" placeholder="email">
             <label>e-mail</label>
           </div>
           <div class="field-wrapper">
-            <input type="text" name="userName" placeholder="User name">
+            <input type="text" id="name" name="userName" placeholder="User name">
             <label>Choose a user name</label>
           </div>
           <div class="field-wrapper">
             <input type="submit" onclick="signUp()">
           </div>
-          <span class="singin" onclick="showLogin()">Already a user?  Sign in</span>
+          <span class="signin" onclick="showLogin()">Already a user?  Sign in</span>
         </form>
       </div>
     </div>
@@ -137,11 +137,14 @@
     <h2>Links to management</h2>
 
     <small>Jump to management action cube</small>
-    <div><a href="../login/login.html">Login </a> <small> signup,password,subscribe,contact</small></div>
-    <div><a href="../CreateHeader/CreateHeader.html">Task Create  </a><small>header,stages,edit</small></div>
-    <div><a href="../assignTask/AssignTask.html">Task Assign  </a><small>edit,progress,select</small></div>
-    <div><a href="../">Dashboard</a><small>members, tasks, assiged, stats</small></div>        
-       <div><a href="../Reports/reports.html">Reports </a><small>search database</small></div>
+    <div>
+      <a href="../login/login.html">Login </a> <small> signup,password,subscribe,contact</small><br>
+      <a href="../createHeader/CreateHeader.html">Task Create </a><small> stages,edit</small><br>
+      <a href="../AssignTask/AssignTask.html">Task Assign </a><small> edit,progress,select</small><br>
+
+      <a href="../Dashboard/People.html">Dashboard-people</a><small> stats, members</small><br>
+      <a href="../Dashboard/Tasks.html">Dashboard-tasks </a><small> stats, tasks</small><br>
+    </div>
  </div>
 </div>   
 
