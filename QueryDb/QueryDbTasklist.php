@@ -1,36 +1,54 @@
-<!DOCTYPE html><html lang="en" >
-<head><meta charset="UTF-8">
- <title>DB Show Tasklist (test)</title>
- <link rel="stylesheet" href="../reports/style.css">
- <link rel="icon" href="../favicons/favicon.ico" type="image/icon type">
-</head>
-</body>
- <div name="stages" align="center">
+<?php
+include '../Connect_T&M.php';
 
- <?php
- include_once "ConnectDb.php";
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['offset']) && isset($_POST['limit'])) {  //could include specific key
+        $offset = intval($_POST['offset']);
+        $limit = intval($_POST['limit']);
 
-//16------------------------------------
-// Run a SQL query of TASKSLIST (foreign keys not details)
-//--------------------------------------
-
- echo "<h2>Tasklist: assigned tasks</h2> <h4><i>Foreign keys only. No details</i></h4><p>";
- $sql = "SELECT * FROM tasklist";
- $result = mysqli_query($conn, $sql);
+//     below is specific to each table in 2 places
+        // Validate offset and limit
  
- // Fetch the result data
- if (mysqli_num_rows($result) > 0) {
-  echo "<table >";
-  echo "<tr><th> TLId </th> " . "<th> StudentId </th> "."<th> ManagerId </th>" . "<th> stage </th></tr>";
-    while($row = mysqli_fetch_assoc($result)) {
-        echo "<tr><td> ". $row["TLId"]." </td><td> ".  $row["StudentId"] ." </td><td> ". $row["ManagerId"]." </td><td> ". $row["Stage"]." </td></tr> ";        
-    }echo"</table>";
- }
+        $count_query = "SELECT COUNT(*) FROM `tasklist` "; // table name specific
+        $result = mysqli_query($conn, $count_query);
+        $total_rows = mysqli_fetch_row($result)[0];
+        
+        // Adjust limit if necessary
+        $offset = min($offset, $total_rows-1);
+        $limit  =min ($limit, $total_rows-$offset);
+
+//the query is different for each function file
+$sql = "SELECT * FROM tasklist LIMIT $limit OFFSET $offset;";
+
+//------------------------------------
+// Run the SQL query. (foreign keys not details) Below is identical in different functions
+//------------------------------------ 
+
+$result = mysqli_query($conn, $sql);
+
+// Fetch the result data
+if (mysqli_num_rows($result) > 0) {
+$dbData = [];
+//$result = mysqli_query($conn, $sql);//why repeated?
+
+$i = 0;
+while ($row = mysqli_fetch_assoc($result)) {
+    $dbData[$i] = $row;
+    $i++;
+}
+echo json_encode($dbData);
+}
+//end of normal query & response
+  
+    } else {
+        http_response_code(400);
+        echo json_encode(['error' => 'Missing offset or limit parameter']);
+    }
+} else {
+    http_response_code(405);
+    echo json_encode(['error' => 'Method Not Allowed']);
+}
 
 // Close the connection
  mysqli_close($conn);
  ?>
-
-</div>
-</body>
-</html>

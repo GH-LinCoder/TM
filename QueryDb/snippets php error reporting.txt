@@ -1,0 +1,30 @@
+<?php
+// Report all errors except E_NOTICE and E_WARNING
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
+
+at top of file. Only affects that one file
+does not show warnings 
+
+===================================
+The php.ini file controls the configuration for all PHP scripts running on the server. Updating the file can set the error reporting level for all scripts, which is useful in production environments.
+
+Step 1: Locate your php.ini file. This file’s location can vary depending on your server setup.
+Step 2: Open the php.ini file in a text editor with appropriate permissions to modify the file.
+Step 3: Find the line that starts with error_reporting, and set the desired level (ex: error_reporting=E_ALL & ~E_NOTICE & ~E_WARNING).
+Step 4: Restart your web server for the changes to take effect.
+
+
+================
+
+Runtime Configuration with .htaccess
+For those using Apache as their web server, the .htaccess file offers a way to set PHP configurations at runtime without the need to restart the server. It only affects the directory in which the .htaccess file is located and its subdirectories.
+
+Step 1: Locate or create a .htaccess file in the root directory of your PHP application.
+Step 2: Add the directive php_value error_reporting [value], where [value] is the level you want to set.
+Here’s how it looks:
+
+# Disable PHP error reporting
+ter_reporting(0)'>php_value error_reporting 0
+
+# Enable reporting of all errors except notices and warnings
+ter_reporting(0)'>php_value error_reporting 30711

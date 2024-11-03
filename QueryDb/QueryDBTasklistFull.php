@@ -1,60 +1,36 @@
-<!DOCTYPE html><html lang="en" >
-<head><meta charset="UTF-8">
- <title>DB Show Tasklist (test)</title>
- <link rel="stylesheet" href="../reports/style.css">
- <link rel="icon" href="../favicons/favicon.ico" type="image/icon type">
-</head>
-</body>
- <div name="stages" align="center">
+<?php
+  include '../Connect_T&M.php';
 
- <?php
- include_once "ConnectDb.php";
+ //the query is different for each function file 
+ $sql = "SELECT tasklist.TLId,tasklist.TaskId,tasksheader.TaskName,tasklist.Stage,\n"
 
-//13------------------------------------
-// Run a SQL query of TASKSLIST (joining other tables)
-//--------------------------------------
+    . " tasklist.StudentId, membersSt.MUserName AS Student, tasklist.ManagerId,\n"
 
-echo "<h2>Tasklist assigned</H2><h4><i>Details from other tables</h4></i>";
-
-$sql = "SELECT tasklist.TLId, tasklist.TaskId,tasklist.Stage, tasklist.StudentId, tasklist.ManagerId, \n"
-
-    . "tasksheader.TaskName,\n"
-
-    . "membersSt.MUserName AS Student,\n"
-
-    . "membersMan.MUserName AS Manager\n"
+    . " membersMan.MUserName AS Manager\n"
 
     . "FROM `tasklist`\n"
 
-    . "INNER JOIN tasksheader ON\n"
-
-    . "tasklist.TaskId=tasksheader.THId\n"
+    . "INNER JOIN tasksheader ON tasklist.TaskId=tasksheader.THId\n"
 
     . "INNER JOIN members AS membersSt  ON\n"
 
-    . "tasklist.StudentId=membersSt.MId\n"
+    . "tasklist.StudentId=membersSt.MId INNER JOIN members AS membersMan ON tasklist.ManagerId=membersMan.MId;";
 
-    . "INNER JOIN members AS membersMan ON\n"
-
-    . "tasklist.ManagerId=membersMan.MId;";
-
+// Fetch the result data
 $result = mysqli_query($conn, $sql);
 
 // Fetch the result data
 if (mysqli_num_rows($result) > 0) {
+$dbData = [];
+$result = mysqli_query($conn, $sql);
 
- echo "<table>";
-    echo "<tr><th> TLId </th>"."<th> Task </th>". "<th> stage </th>" . "<th> Student </th> "."<th> Manager </th> </tr>"; 
-    while($row = mysqli_fetch_assoc($result)) {
-        echo"<tr><td>". $row["TLId"]."</td><td>". $row["TaskId"]." ". $row["TaskName"]."</td><td>". $row["Stage"]."</td><td>".  $row["StudentId"]." ".  $row["Student"] ."</td><td>".  $row["ManagerId"]." ". $row["Manager"]."</td></tr>";
-//        
-    } echo"</table>";
+$i = 0;
+while ($row = mysqli_fetch_assoc($result)) {
+    $dbData[$i] = $row;
+    $i++;
 }
-
+echo json_encode($dbData);
+}
 // Close the connection
  mysqli_close($conn);
  ?>
-
-</div>
-</body>
-</html>

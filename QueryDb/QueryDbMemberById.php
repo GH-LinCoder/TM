@@ -1,41 +1,50 @@
-<!DOCTYPE html><html lang="en" >
-<head><meta charset="UTF-8">
- <title>DB Show Tasklist (test)</title>
- <link rel="stylesheet" href="../reports/style.css">
- <link rel="icon" href="../favicons/favicon.ico" type="image/icon type">
-</head>
-</body>
- <div name="stages" align="center">
+<?php
+include '../Connect_T&M.php';
 
- <?php
- include_once "ConnectDb.php";
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['MemberId']))  {  //could include specific key
+        $key = intval($_POST['MemberId']);
 
-//--------------------------------------
-// Run a SQL query of MEMBERS
-//39------------------------------------
+        $count_query = "SELECT COUNT(*) FROM `members` "; // table name specific
+        $result = mysqli_query($conn, $count_query);
+        $total_rows = mysqli_fetch_row($result)[0];
+        
 
-echo "<br>PHP ....ByMemberId()<br>";
+        // Adjust if necessary
+        $key = min($key, $total_rows); //never let $MId exceed the last row
+        $key = max($key, 1);
 
-$MId=$_POST['MemberId']; //doesn't have any value. Why?
-echo "PHP memberId: ".$MId."<br>";
 
-echo "<h2>Members Table</h2>";
-$sql = "SELECT * FROM members WHERE `MID`=$MId";
+$sql = "SELECT * FROM members WHERE `MId`=$key;";
+
+//------------------------------------
+// Run the SQL query. Below is identical in different functions
+//------------------------------------
+
 $result = mysqli_query($conn, $sql);
+
 // Fetch the result data
-if (mysqli_num_rows($result) > 0) 
-
-echo "<table>";
-    echo "<tr><th> MId </th><th> MUserName </th><th> mEmail </th></tr>";
-    while($row = mysqli_fetch_assoc($result)) {
-        echo "<tr><td> " . $row["MId"]. " </td><td> " . $row["MUserName"]." </td><td> ". $row["MEmail"]." </td></tr>";
-            } echo "</table>";
-
+if (mysqli_num_rows($result) > 0) {
+$row = mysqli_fetch_assoc($result);
+echo json_encode($row);
+} else {
+//    http_response_code(500);
+    echo json_encode(['error No row found ']);
+}
+    }else {
+        http_response_code(400);
+        echo json_encode(['error' => 'Missing parameter']);
+          }
+    
+//end of normal query & response
+} else {
+        http_response_code(405);
+        echo json_encode(['error' => 'Method Not Allowed']);}
 
 // Close the connection
  mysqli_close($conn);
- ?>
 
-</div>
-</body>
-</html>
+
+
+ 
+ ?>

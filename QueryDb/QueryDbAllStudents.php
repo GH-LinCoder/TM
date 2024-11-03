@@ -8,17 +8,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 //     below is specific to each table in 2 places
         // Validate offset and limit
- 
-        $count_query = "SELECT COUNT(*) FROM `tasksstages` "; // table name specific
-        $result = mysqli_query($conn, $count_query);
-        $total_rows = mysqli_fetch_row($result)[0];
-        
-        // Adjust limit if necessary
-        $offset = min($offset, $total_rows-1);
-        $limit  =min ($limit, $total_rows-$offset);
+
+$count_query = "SELECT COUNT(*) FROM `tasklist`
+INNER JOIN tasksheader ON tasklist.TaskId=tasksheader.THId
+INNER JOIN members AS membersSt ON tasklist.StudentId=membersSt.MId 
+INNER JOIN members AS membersMan ON tasklist.ManagerId=membersMan.MId;";
+   $result = mysqli_query($conn, $count_query);
+   $total_rows = mysqli_fetch_row($result)[0];
+   
+   // Adjust limit if necessary
+   $offset = min($offset, $total_rows-1);
+   $limit  =min ($limit, $total_rows-$offset);
 
 //the query is different for each function file
- $sql = "SELECT * FROM `tasksstages` LIMIT $limit OFFSET $offset;"; // table name specific
+$sql = "SELECT tasklist.TLId, tasklist.TaskId, tasksheader.TaskName, tasklist.Stage, tasklist.StudentId, membersSt.MUserName AS StudentName, tasklist.ManagerId, membersMan.MUserName AS ManagerName \n"
+
+    . "FROM `tasklist`\n"
+
+    . "INNER JOIN tasksheader ON tasklist.TaskId=tasksheader.THId\n"
+
+    . "INNER JOIN members AS membersSt ON tasklist.StudentId=membersSt.MId \n"
+
+    . "INNER JOIN members AS membersMan ON tasklist.ManagerId=membersMan.MId LIMIT $limit OFFSET $offset;";
+
+    // Run a SQL query
+
 
 //------------------------------------
 // Run the SQL query. Below is identical in different functions

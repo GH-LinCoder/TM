@@ -2,10 +2,10 @@
 include '../Connect_T&M.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['MemberId']))  {  //could include specific key
-        $key = intval($_POST['MemberId']);
+    if (isset($_POST['stageTSId']))  {  //could include specific key
+        $key = intval($_POST['stageTSId']);
 
-        $count_query = "SELECT COUNT(*) FROM `tasklist` "; // table name specific
+        $count_query = "SELECT COUNT(*) FROM `members` "; // table name specific
         $result = mysqli_query($conn, $count_query);
         $total_rows = mysqli_fetch_row($result)[0];
         
@@ -13,26 +13,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Adjust if necessary
         $key = min($key, $total_rows); //never let $MId exceed the last row
         $key = max($key, 1);
-//13------------------------------------
-// Run a SQL query of TASKSLIST by student (joining other tables)
-//--------------------------------------
 
 
-//$sql = "SELECT * FROM `tasklist` WHERE StudentID= 3;";
-
-$sql = "SELECT tasklist.TLId, tasklist.TaskId,tasklist.Stage, tasklist.StudentId, tasklist.ManagerId, \n"
-
-    . "tasksheader.TaskName, membersSt.MUserName AS Student, membersMan.MUserName AS Manager \n"
-
-    . "FROM `tasklist`\n"
-
-    . "INNER JOIN tasksheader ON tasklist.TaskId=tasksheader.THId\n"
-
-    . "INNER JOIN members AS membersSt ON tasklist.StudentId=membersSt.MId AND StudentId=$key\n"
-
-    . "INNER JOIN members AS membersMan ON tasklist.ManagerId=membersMan.MId;";
-
-
+$sql = "SELECT * FROM tasksstages WHERE `TSId`=$key;";
 
 //------------------------------------
 // Run the SQL query. Below is identical in different functions
@@ -61,4 +44,7 @@ echo json_encode($row);
 // Close the connection
  mysqli_close($conn);
 
+
+
+ 
  ?>
