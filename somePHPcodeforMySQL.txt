@@ -15,8 +15,188 @@ if ($conn->query($sql) === TRUE) {
     echo "Error: " . $sql . "<br>" . $conn->error;
   }
 
+
+SELECT * FROM `tasksstages` LIMIT 4 OFFSET 3;
+$sql = "SELECT * FROM `tasksstages` LIMIT 4 OFFSET 3;";
+
+
+get all of tasks & StageDesc
+
+SELECT * FROM `tasksheader` CROSS JOIN `tasksstages`; //but this gave 55 rows when there are only 8 + 8 =16 total rows
+
+$sql = "SELECT * FROM `tasksheader` CROSS JOIN `tasksstages`;";
+
+use two calls?
+$sql = "SELECT * FROM `tasksheader`";
+
+$sql = "SELECT * FROM `tasksstages`;"
+
+
+
+
+
+Students (all) with id + names + task & name + stage + manager & name
+
+SELECT tasklist.TLId, tasklist.TaskId, tasksheader.TaskName, tasklist.Stage, tasklist.StudentId, membersSt.MUserName AS StudentName, tasklist.ManagerId, membersMan.MUserName AS ManagerName 
+FROM `tasklist`
+INNER JOIN tasksheader ON tasklist.TaskId=tasksheader.THId
+INNER JOIN members AS membersSt ON tasklist.StudentId=membersSt.MId 
+INNER JOIN members AS membersMan ON tasklist.ManagerId=membersMan.MId;
+
+$sql = "SELECT tasklist.TLId, tasklist.TaskId, tasksheader.TaskName, tasklist.Stage, tasklist.StudentId, membersSt.MUserName AS StudentName, tasklist.ManagerId, membersMan.MUserName AS ManagerName \n"
+    . "FROM `tasklist`\n"
+    . "INNER JOIN tasksheader ON tasklist.TaskId=tasksheader.THId\n"
+    . "INNER JOIN members AS membersSt ON tasklist.StudentId=membersSt.MId \n"
+    . "INNER JOIN members AS membersMan ON tasklist.ManagerId=membersMan.MId;";
+
+
+
+
+
+
 count of all tables & unique students & managers
 
+finally got something working aI & I (neither did it alone)
+
+
+$sql = "SELECT\n"
+
+    . "  (SELECT COUNT(DISTINCT MId) FROM members) AS countMembers,\n"
+
+    . "  (SELECT COUNT(DISTINCT THId) FROM tasksheader) AS countTasksheaders,\n"
+
+    . "  (SELECT COUNT(DISTINCT TSId) FROM tasksStages) AS countTasksStages,\n"
+
+    . "  (SELECT COUNT(DISTINCT TLId) FROM taskList) AS countTaskList,\n"
+
+    . "  (SELECT COUNT(DISTINCT studentId) FROM taskList) AS countStudents,\n"
+
+    . "  (SELECT COUNT(DISTINCT TaskAuthor) FROM tasksheader) AS countAuthors,\n"
+
+    . "  (SELECT COUNT(DISTINCT managerId) FROM taskList) AS countManagers;";
+
+The above produces single associative array that works.
+
+
+
+Tasklist with details
+SELECT 
+tasklist.TLId, 
+tasklist.TaskId,
+tasksheader.TaskName,
+tasklist.Stage, 
+tasklist.StudentId, 
+membersSt.MUserName AS Student,
+tasklist.ManagerId,
+membersMan.MUserName AS Manager
+
+
+FROM `tasklist`
+INNER JOIN tasksheader ON
+tasklist.TaskId=tasksheader.THId
+INNER JOIN members AS membersSt  ON
+tasklist.StudentId=membersSt.MId
+INNER JOIN members AS membersMan ON
+tasklist.ManagerId=membersMan.MId;
+
+$sql = "SELECT \n"
+
+    . "tasklist.TLId, \n"
+
+    . "tasklist.TaskId,\n"
+
+    . "tasksheader.TaskName,\n"
+
+    . "tasklist.Stage, \n"
+
+    . "tasklist.StudentId, \n"
+
+    . "membersSt.MUserName AS Student,\n"
+
+    . "tasklist.ManagerId,\n"
+
+    . "membersMan.MUserName AS Manager\n"
+
+    . "\n"
+
+    . "\n"
+
+    . "FROM `tasklist`\n"
+
+    . "INNER JOIN tasksheader ON\n"
+
+    . "tasklist.TaskId=tasksheader.THId\n"
+
+    . "INNER JOIN members AS membersSt  ON\n"
+
+    . "tasklist.StudentId=membersSt.MId\n"
+
+    . "INNER JOIN members AS membersMan ON\n"
+
+    . "tasklist.ManagerId=membersMan.MId;";
+
+
+
+
+
+
+
+My code works but doesn't include the names AS
+SELECT
+COUNT(*) AS countMembers FROM members
+UNION ALL
+SELECT COUNT(DISTINCT StudentId)FROM tasklist AS countStudents
+UNION ALL
+SELECT COUNT(DISTINCT ManagerId) FROM tasklist AS countManagers
+UNION ALL
+SELECT COUNT(DISTINCT TaskAuthor) FROM tasksheader AS countAuthors
+UNION ALL
+SELECT COUNT(*) AS countTasksheaders FROM tasksheader
+UNION ALL
+SELECT COUNT(*) AS countTasksStages FROM tasksstages
+UNION ALL
+SELECT COUNT(*) AS countTaskList FROM tasklist;
+
+
+T
+$sql = "SELECT\n"
+
+    . "COUNT(*) AS countMembers FROM members\n"
+
+    . "UNION ALL\n"
+
+    . "SELECT COUNT(DISTINCT StudentId)FROM tasklist AS countStudents\n"
+
+    . "UNION ALL\n"
+
+    . "SELECT COUNT(DISTINCT ManagerId) FROM tasklist AS countManagers\n"
+
+    . "UNION ALL\n"
+
+    . "SELECT COUNT(DISTINCT TaskAuthor) FROM tasksheader AS countAuthors\n"
+
+    . "UNION ALL\n"
+
+    . "SELECT COUNT(*) AS countTasksheaders FROM tasksheader\n"
+
+    . "UNION ALL\n"
+
+    . "SELECT COUNT(*) AS countTasksStages FROM tasksstages\n"
+
+    . "UNION ALL\n"
+
+    . "SELECT COUNT(*) AS countTaskList FROM tasklist;";
+
+
+
+
+$sql = "SELECT COUNT(*) FROM `tasksstages`;";
+
+
+
+
+
+This AI code - doesn't do what I wanted, but does have the associated array
 
 SELECT
     COUNT(members.MId) AS countMembers,
@@ -54,7 +234,7 @@ $sql = "SELECT\n"
 
     . "LEFT JOIN tasksStages ON tasksStages.TSId = taskList.TLId;";
 
-the above php failed
+
 
 
 
@@ -175,7 +355,8 @@ INSERT INTO `tasksheader`(`TaskName`, `TaskDesc`, `TaskAuthor`)
 VALUES ('[value-2]','[value-3]','[value-4]');
 $sql = "INSERT INTO `tasksheader`(`TaskName`, `TaskDesc`, `TaskAuthor`) VALUES ('[value-2]','[value-3]','[value-4]')";
 
-
+INSERT INTO `members`(`MEmail`, `MUserName`) VALUES ('jpoj34@thrup.zu','JayPodj');
+$sql = "INSERT INTO `members`(`MEmail`, `MUserName`) VALUES (\'jpoj34@thrup.zu\',\'JayPodj\');";
 
 
 Tasklist by tasklist number TLId
