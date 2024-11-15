@@ -1,42 +1,51 @@
 let prism = document.querySelector(".rec-prism");
+const logToConsole=true;
+//const logToConsole=false; 
 
 function showSignup(){ //right
+  if(logToConsole) console.log('showSignup()');
   prism.style.transform = "translateZ(-100px) rotateY( -90deg)";
   document.getElementById("panel").innerHTML="Pleased to meet you";
 }
 function showLogin(){ //front
+  if(logToConsole) console.log('showLogin()');
   prism.style.transform = "translateZ(-100px)";
   document.getElementById("panel").innerHTML="Welcome back";
 
 }
 function showForgotPassword(){ //back
+  if(logToConsole) console.log('showAPassword()');
   prism.style.transform = "translateZ(-100px) rotateY( -180deg)";
   document.getElementById("panel").innerHTML="Memory not what it used to be";
 }
 
 function showSubscribe(){ //right
+  if(logToConsole) console.log('showSubscribe()');
   prism.style.transform = "translateZ(-100px) rotateX( 90deg)";
   document.getElementById("panel").innerHTML="Newsletters could end up in spam";
 }
 
 function showContactUs(){ //Left
+  if(logToConsole) console.log('showContactUs()');
   prism.style.transform = "translateZ(-100px) rotateY( 90deg)";
   document.getElementById("panel").innerHTML="What have we done now?";
 }
 
 function showManage(){//bottom
+  if(logToConsole) console.log('showManage()');
   prism.style.transform = "translateZ(-100px) rotateX( -90deg)";
   document.getElementById("panel").innerHTML="Get busy";
 }
 
 
 function showThankYou(){//top
-
+  if(logToConsole) console.log('showThankYou()');
   document.getElementById("panel").innerHTML="Thanks for submitting";
 }
 
 async function signUp(){//top
 /** need to insert in members */
+if(logToConsole) console.log('showSignUp()');
   document.getElementById("panel").innerHTML="Thanks";
 
   inputName= encodeURIComponent(document.getElementById("name").value) ;
@@ -97,6 +106,7 @@ console.log(inputName + " "+inputEmail);
 
 
 async function fetchDbSingle(url,str) {
+  if(logToConsole) console.log('fetchDbSingle()');
   const dataToSend=str; 
 console.log('fetchDbSingle: '+str);
    //no idea why return was written here: return fetch(). aparently not needed but does seem needed in fetchDb(url)  ???
