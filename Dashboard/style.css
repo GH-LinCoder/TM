@@ -76,7 +76,11 @@
 
 .cardContent{ /* the data such as names and descriptions underneath the headers */
 padding:3px;
+}
 
+#cardPersonId{ /* where key number and name are displayed */
+padding: 3px;
+padding-bottom: 15px;
 }
 
 
@@ -163,6 +167,19 @@ padding:3px;
 	background-color: #ffffff;
 	color: #001F61;
 }
+
+/* panel for feedback to user */
+
+#panel{
+	width: 50%;
+	position: relative;
+	left:25%;
+	background-color:#4dccc6;
+	padding:5px;
+	border-radius: 5px;
+	word-wrap: break-word;
+}
+
 
 /* Sliding PANEL*/
 .sliding-panel-container {
