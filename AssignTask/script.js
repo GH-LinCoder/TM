@@ -1,40 +1,52 @@
 let prism = document.querySelector(".rec-prism");
+const logToConsole=true;
+//const logToConsole=false; 
+
+console.log('assigntask.html')
+
 
 function showAssign(){
+  if(logToConsole) console.log('showAssign()');
   prism.style.transform = "translateZ(-100px)";
   document.getElementById("panel").innerHTML="If you have permission you can select someone to do a task.<br> That person is called <i>student</i>";
 
 }
 
 function showEdit(){
+  if(logToConsole) console.log('showEdit()');
   prism.style.transform = "translateZ(-100px) rotateY( -90deg)";
   document.getElementById("panel").innerHTML="If you have permission you can edit the details of who is assigned to the task<br>Change the student , the task or the manager here.";
 
 }
 
 function showProgressStudent(){
+  if(logToConsole) console.log('showProgressStudent()');
   prism.style.transform = "translateZ(-100px) rotateY( 90deg)";
   document.getElementById("panel").innerHTML="If you have permission you can change which stage of the task the student is in.<br>You click the move back/forward buttons to place the student in the relevant stage (step or lesson).";
 }
 
 function showSelectTask(){
+  if(logToConsole) console.log('showSelectTask()');
   prism.style.transform = "translateZ(-100px) rotateY( -180deg)";
   document.getElementById("panel").innerHTML="Search the full list of tasks<br> or those persons who are currently students of tasks,<br> or managers of tasks,<br> or who have authored a task<br>.";
 }
 
 function showManage(){
+  if(logToConsole) console.log('showManage()');
   prism.style.transform = "translateZ(-100px) rotateX( -90deg)";
   document.getElementById("panel").innerHTML="Can't talk now, lots to do";
 
 }
 
 function showThankYou(){
+  if(logToConsole) console.log('showThankyou()');
   prism.style.transform = "translateZ(-100px) rotateX( 90deg)";
 }
 
 /*                   call server functions                 */
 
 function assignTask(){
+  if(logToConsole) console.log('AssignTask()');
   prism.style.transform = "translateZ(-100px) rotateX( 90deg)";
 
   /* read form input & create string of associated array  label=value   to send to server*/
@@ -89,12 +101,14 @@ function assignTask(){
 }
 
 function editAssignment() {
+  if(logToConsole) console.log('editAssignment()');
   prism.style.transform = "translateZ(-100px) rotateX( 90deg)";
 }
 
 
 /*                                                                           utility connect & send request for a php file                                */
 function XMLRequest($fileURL, str){
+  if(logToConsole) console.log('XMLRequest()');
   var request= new XMLHttpRequest();
   request.onreadystatechange = function()
   {
@@ -119,6 +133,7 @@ function XMLRequest($fileURL, str){
 
 
 function dBTasklistByStudent(){
+  if(logToConsole) console.log('dbTasklistByStudent()');
   XMLRequest("../queryDb/QueryDbTasklistByStudent.php");
 }
 
@@ -126,6 +141,7 @@ function dBTasklistByStudent(){
 
 
 function thisAssignedTask(){
+  if(logToConsole) console.log('thisAssignedTask()');
   document.getElementById("panel").innerHTML+=" dBthisAssignedTask() ";
   var TLId = encodeURIComponent(document.getElementById("TLId").value);
     var str="TLId="+ TLId;
@@ -141,6 +157,7 @@ function thisAssignedTask(){
 
 
 function promote(){
+  if(logToConsole) console.log('promote()');
   //prism.style.transform = "translateZ(-100px) rotateX( 90deg)";
   //where find current stage?  need to send TLId  & stage to php
 
@@ -154,10 +171,12 @@ stage = 2;  //not sure where to get this yet
 }
 
 function demote(){
+  if(logToConsole) console.log('demote()');
   prism.style.transform = "translateZ(-100px) rotateX( 90deg)";
   //Need find the tasklist entry for this studentId and increment the 'stage' column
 }
 
 function searchTask(){
+  if(logToConsole) console.log('searchTask()');
   prism.style.transform = "translateZ(-100px) rotateX( 90deg)"
 }  
