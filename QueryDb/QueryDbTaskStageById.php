@@ -43,8 +43,4 @@ echo json_encode($row);
 
 // Close the connection
  mysqli_close($conn);
-
-
-
- 
  ?>

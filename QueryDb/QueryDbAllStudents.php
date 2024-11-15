@@ -21,7 +21,7 @@ INNER JOIN members AS membersMan ON tasklist.ManagerId=membersMan.MId;";
    $limit  =min ($limit, $total_rows-$offset);
 
 //the query is different for each function file
-$sql = "SELECT tasklist.TLId, tasklist.TaskId, tasksheader.TaskName, tasklist.Stage, tasklist.StudentId, membersSt.MUserName AS StudentName, tasklist.ManagerId, membersMan.MUserName AS ManagerName \n"
+$sql = "SELECT tasklist.StudentId, membersSt.MUserName AS StudentName, tasklist.TaskId, tasksheader.TaskName, tasklist.Stage,   tasklist.ManagerId, membersMan.MUserName AS ManagerName, tasklist.TLId \n"
 
     . "FROM `tasklist`\n"
 
@@ -29,7 +29,7 @@ $sql = "SELECT tasklist.TLId, tasklist.TaskId, tasksheader.TaskName, tasklist.St
 
     . "INNER JOIN members AS membersSt ON tasklist.StudentId=membersSt.MId \n"
 
-    . "INNER JOIN members AS membersMan ON tasklist.ManagerId=membersMan.MId LIMIT $limit OFFSET $offset;";
+    . "INNER JOIN members AS membersMan ON tasklist.ManagerId=membersMan.MId ORDER BY StudentId LIMIT $limit OFFSET $offset;";
 
     // Run a SQL query
 
