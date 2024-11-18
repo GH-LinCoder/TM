@@ -1,4 +1,7 @@
-<?php
+<?php session_start();
+
+
+
 include '../Connect_T&M.php';
 
 $sql = "SELECT\n"

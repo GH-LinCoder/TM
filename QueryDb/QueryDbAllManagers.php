@@ -1,4 +1,4 @@
-<?php
+<?php session_start();
 include '../Connect_T&M.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

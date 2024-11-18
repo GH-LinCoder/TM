@@ -1,4 +1,4 @@
-<?php
+<?php session_start();
   include '../Connect_T&M.php';
 
  //the query is different for each function file 
