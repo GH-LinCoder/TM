@@ -1,0 +1,47 @@
+16:40 12 Nov 2024 Running T&M\
+Each function logs to console. Some data also logged. (The script has a boolean to switch toggle function logging)
+
+On load of people.html or task.html the summary is displayed
+
+
+fetchSummary()
+script.js:435 showSummary()
+script.js:1950 showStageColor()
+
+ clicked menu Members\i0
+script.js:1296 makeListVisible()
+script.js:322 showMembers()
+script.js:194 fetchDb()
+script.js:186 calculateLimitOffset()
+script.js:207 (10)\~[\{\'85\}, \{\'85\}, \{\'85\}, \{\'85\}, \{\'85\}, \{\'85\}, \{\'85\}, \{\'85\}, \{\'85\}, \{\'85\}]0: \{MId: '1', MEmail: 'firs@glob.com', MUserName: 'FirstiRides', MDate: '2024-09-21 00:00:00'\}1: \{MId: '2', MEmail: 'sug@jabbi.com', MUserName: 'Secondscount', MDate: '2024-09-22 00:00:00'\}2: \{MId: '3', MEmail: 'brisia300@lodo.es', MUserName: 'Brisia', MDate: '2024-10-10 20:38:37'\}3: \{MId: '4', MEmail: 'grunble0@yahho.es', MUserName: 'jodi', MDate: '2024-10-10 20:39:22'\}4: \{MId: '5', MEmail: 'munchfromb0@yahho.co.uk', MUserName: 'Fromblemunch', MDate: '2024-10-10 20:40:00'\}5: \{MId: '6', MEmail: 'malcootrevi0@yahho.co.uk', MUserName: 'GorgiPorgie', MDate: '2024-10-10 20:40:31'\}6: \{MId: '7', MEmail: 'gabbledruug@gmukle.co.uk', MUserName: 'Comolpip', MDate: '2024-10-10 20:41:17'\}7: \{MId: '8', MEmail: 'jpoj34@thrup.zu', MUserName: 'JayPodj', MDate: '2024-10-29 20:34:36'\}8: \{MId: '14', MEmail: 'GCDrumm9@coozi.von', MUserName: 'GC', MDate: '2024-10-29 21:53:46'\}9: \{MId: '16', MEmail: 'JPLooza@coozi.von', MUserName: 'Loozabien', MDate: '2024-10-29 21:55:08'\}length: 10[[Prototype]]: Array(0)
+script.js:1304 displayOnList()
+script.js:1329 Length of rowData: 10 currentPage=  1
+
+ clicked member number 3 on list\i0
+script.js:519 chooseWhichCardToUse()
+script.js:520 \{MId: '3', MEmail: 'brisia300@lodo.es', MUserName: 'Brisia', MDate: '2024-10-10 20:38:37'\}MDate: "2024-10-10 20:38:37"MEmail: "brisia300@lodo.es"MId: "3"MUserName: "Brisia"[[Prototype]]: Object
+script.js:536 MId
+script.js:546 buildDisplayCardMain()
+script.js:455 makeCardsVisible()
+script.js:552 DisplayOnCard() Clicked row: \{MId: '3', MEmail: 'brisia300@lodo.es', MUserName: 'Brisia', MDate: '2024-10-10 20:38:37'\}  Number of columns= 4
+script.js:1941 showTaskColor()
+script.js:1741 buildStagesCardIfNeeded
+
+clicked next button on card to display the number 4\i0
+script.js:1941 showTaskColor()
+
+clicked number 4 display to display member number 4\b0
+script.js:1941 showTaskColor()
+script.js:727 async \f1\u402? memberById(key) \{//need get the MId? and pass it on?
+  const str = "keyId=" + key + "&tableName=" + "members" + "&keyName=" + "MId";
+    if(logToConsole) console.log(' memberById() ');
+  const dataBy\'85
+script.js:223  memberById() 
+script.js:157 fetchDbSingle(keyId=4&tableName=members&keyName=MId)
+script.js:225 \{MId: '4', MEmail: 'grunble0@yahho.es', MUserName: 'jodi', MDate: '2024-10-10 20:39:22', maxKey: '29'\}MDate: "2024-10-10 20:39:22"MEmail: "grunble0@yahho.es"MId: "4"MUserName: "jodi"maxKey: "29"[[Prototype]]: Object
+script.js:546 buildDisplayCardMain()
+script.js:455 makeCardsVisible()
+script.js:552 DisplayOnCard() Clicked row: \{MId: '4', MEmail: 'grunble0@yahho.es', MUserName: 'jodi', MDate: '2024-10-10 20:39:22', maxKey: '29'\}  Number of columns= 5
+script.js:1941 showTaskColor()
+script.js:1741 buildStagesCardIfNeeded\f0
+}
