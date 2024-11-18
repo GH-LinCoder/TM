@@ -1,19 +1,24 @@
 
 let prism = document.querySelector(".rec-prism");
+const logToConsole=true;
+//const logToConsole=false;
 
 function showCreateHeader(){
-prism.style.transform = "translateZ(-100px) "; 
+  if(logToConsole) console.log('showCreateHeader()');
+  prism.style.transform = "translateZ(-100px) "; 
 document.getElementById("panel").innerHTML="Each task has a name, a description, and an author.<br>Then you can create each stage (step or lesson) in the task.";
 
 }
 function createHeader(){
                //document.getElementById("panel").innerHTML="js createHeader 1 "; 
 //Extract data from web page form & prepare for building a string that is safe to send. 
-  var str, 
+if(logToConsole) console.log('createHeader()');
+var str, 
  userName= encodeURIComponent(document.getElementById("name").value) , 
  describe= encodeURIComponent(document.getElementById("describe").value), 
- author=   encodeURIComponent(document.getElementById("author").value);
- document.getElementById("panel").innerHTML="js createHeader 2 "; 
+ author=   encodeURIComponent(document.getElementById("author").value),
+ taskFaq=  encodeURIComponent(document.getElementById("taskFaq").value);
+// document.getElementById("panel").innerHTML="js createHeader 2 "; 
 var request= new XMLHttpRequest();
 var last_id; //????????????????
 //need check have no nulls
@@ -24,8 +29,9 @@ var last_id; //????????????????
 str="userName="+ userName;
 str+="&desc="+ describe;
 str+="&author="+ author;
-
-document.getElementById("panel").innerHTML="js createStage has str=<br>  "+str +"<p>"; //developer feedback FAILS here but works in other function stage<<<<<<<<<<<<<<
+str+="&taskFaq="+taskFaq;
+if(logToConsole) console.log(str);
+//document.getElementById("panel").innerHTML="js createHeader has str=<br>  "+str +"<p>"; //developer feedback FAILS here but works in other function stage<<<<<<<<<<<<<<
 
 //the call to the server will be asynchronous & checked for notification of completion. readystate starts at 0 & goes to 4 when complete
 //the server returns a ststus of 200 if the task was run or an error code of 400, 401, 403 
@@ -39,10 +45,10 @@ request.onreadystatechange = function() {
   var str2= document.getElementById("panel").innerHTML;
   //var str2="a test string in which id occurs ";
   var found =str2.indexOf("id");
-  document.getElementById("panel").innerHTML+="Position of last_id:"+found+"<br>";//does nothing when includes +found if outside this asynchronous function
+  //document.getElementById("panel").innerHTML+="Position of last_id:"+found+"<br>";//does nothing when includes +found if outside this asynchronous function
  
-  last_id=str2.slice(found+3);
-  document.getElementById("panel").innerHTML+=last_id;//+3 to ignore  id=
+  //last_id=str2.slice(found+3);
+  //document.getElementById("panel").innerHTML+=last_id;//+3 to ignore  id=
 //  document.getElementById("panel").innerHTML+=str2.slice(found+3);//+3 to ignore  id=
 
 //WORKS here because wais for response, but o
@@ -53,28 +59,24 @@ request.onreadystatechange = function() {
 //need to prevent send if missing input (need to validate the input NOT YET IMPLEMENTED)
 if (userName.length=="" || describe=="" || author=="") { 
   document.getElementById("panel").innerHTML="Can't send to database because of lack of input(BAD nulls)<br>  ";  
-} else {document.getElementById("panel").innerHTML="js createHeader has no nullS=<br>  ";
+} else {//document.getElementById("panel").innerHTML="js createHeader has no nullS=<br>  ";
 
-//request.open("GET", "insert_taskheader.php?data=" + str, true);
-//the request is now to be started with method POST, the url of where the PHP script is, & asynchronous=true
-//var str2;
-//str2=
+
+    //the request is started with method POST, the url of where the PHP script is, & asynchronous=true
 request.open("POST", "insert_taskheader.php", true);
-//the serve needs some extra data
+    //the server needs some extra data
 request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded"); //??????
 
-// these were suggested online but not sure why
-//request.setRequestHeader('X-Requested-With', 'XMLHttpRequest'); //????
-//http.setRequestHeader("Content-length", str.length);//this prevented .php call
-//http.setRequestHeader("Connection", "close");
+  // these were suggested online but not sure why
+  //request.setRequestHeader('X-Requested-With', 'XMLHttpRequest'); //????
+  //http.setRequestHeader("Content-length", str.length);//this prevented .php call
+  //http.setRequestHeader("Connection", "close");
 
-//the data is sent in str which is formatted like an indexed array  label1=" value1 +"&label2=" value2
+  //the data is sent in str which is formatted like an indexed array  label1=" value1 +"&label2=" value2
 request.send(str);  // <<<<<<<<<<<<<<<<<<<<< str=request.send(str) return is undefined
 
 //document.getElementById("panel").innerHTML+="<br> return="+ str2 +"<br>";// str2 'undefined'
 
-
-//alert('found');
 //can js find the returned last_id value that the php echo sent?????
 
 //document.getElementById("panel").innerHTML="Trying to load last_id by php writing script"+last_id;  //undefined
@@ -88,12 +90,13 @@ request.send(str);  // <<<<<<<<<<<<<<<<<<<<< str=request.send(str) return is und
 }
 
 function showCreateStage(){
+  if(logToConsole) console.log('showCreateStage()');
 prism.style.transform = "translateZ(-100px) rotateY( +90deg)";
 document.getElementById("panel").innerHTML="There can be more than one stage (step or lesson) as part of the overall task.<br> At least one. <br>It has a name, a stage number, a descriptioon & an author";
 }
 
 function createStage(){
-  
+  if(logToConsole) console.log('createStage()');
     //document.getElementById("panel").innerHTML="js createHeader 1 "; 
   //Extract data from web page form & prepare for building a string that is safe to send. 
     var str, 
@@ -127,16 +130,10 @@ if (task_THId=="" ||  stageName=="" || describe=="" ||stageNumber=="" || author=
   document.getElementById("panel").innerHTML="Can't send to database because of lack of input(BAD nulls)<br>  ";  
 } else {document.getElementById("panel").innerHTML="js createHeader has no nullS=<br>  ";
 
-//request.open("GET", "insert_taskheader.php?data=" + str, true);
-//the request is now to be started with method POST, the url of where the PHP script is, & asynchronous=true
+//the request is started with method POST, the url of where the PHP script is, & asynchronous=true
 request.open("POST", "insert_taskstage.php", true);
 //the serve needs some extra data
 request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded"); //??????
-
-// these were suggested online but not sure why
-//request.setRequestHeader('X-Requested-With', 'XMLHttpRequest'); //????
-//http.setRequestHeader("Content-length", str.length);//this prevented .php call
-//http.setRequestHeader("Connection", "close");
 
 //the data is sent in str which is formatted like an indexed array  label1=" value1 +"&label2=" value2
 request.send(str);  // <<<<<<<<<<<<<<<<<<<<<
@@ -145,25 +142,30 @@ request.send(str);  // <<<<<<<<<<<<<<<<<<<<<
 }
 
 function showEditHeader(){
+  if(logToConsole) console.log('showEditHeader()');
   prism.style.transform = "translateZ(-100px) rotateY( -180deg)";
   document.getElementById("panel").innerHTML="If you have permission you can edit the details of a task<br>Edit the task name name, description or author here.<br> Use the other link to edit a stage";
 
 }
 function editHeader(){
+  if(logToConsole) console.log('editHeader()');
  ; 
 }
 
 function showEditStage(){
+  if(logToConsole) console.log('showEditStage()');
   prism.style.transform = "translateZ(-100px) rotateY( -90deg)";
   document.getElementById("panel").innerHTML="If you have permission you can edit the details of a task stage<br>Edit the task name name, description, stage number or author here.<br> Use the other link to edit the task header";
 
 }
 function editStage(){
+  if(logToConsole) console.log('editStage()');
  ; 
 }
 
 
 function showManage(){
+  if(logToConsole) console.log('showManage()');
   prism.style.transform = "translateZ(-100px) rotateX( -90deg)";
   document.getElementById("panel").innerHTML="Work to do.";
 
@@ -171,6 +173,7 @@ function showManage(){
 
 
 function showThankYou(){
+  if(logToConsole) console.log('showThankYou()');
   prism.style.transform = "translateZ(-100px) rotateX( 90deg)";
   //         trying next 2 line 
   //var result = '<?php CreateHeader.php; ?>';
@@ -179,11 +182,13 @@ function showThankYou(){
 }
 
 function showThankYouSignup(){
+  if(logToConsole) console.log('showThankYouSignup()');
   prism.style.transform = "translateZ(-100px) rotateX( 90deg)";
 //echo ( getElementsByName("email"+"<<<"));
 }
 
 function showThankYouLogin(){
+  if(logToConsole) console.log('showThankYouLogin()');
   prism.style.transform = "translateZ(+50px) rotateX( 90deg)";
 
 
