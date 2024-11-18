@@ -1,0 +1,49 @@
+.remember_button {
+    
+        background-color: #5A5050;
+        border: 0;
+        border-radius: 5px;
+        box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+        color: #fff;
+        font-size: 12px;
+        padding: 3px 4px;
+        position: relative;        
+        letter-spacing: 1px;
+        width: 100px;
+
+}
+
+    /*Button goes white on hover*/
+.remember_button:hover {
+        background-color: #ffffff;
+        color: #001F61;
+        cursor:pointer;
+    }    
+
+
+.rememberLi{
+    background-color: #aa9595;
+    border: 0;
+    border-radius: 5px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+    color: #fff;
+    font-size: 12px;
+    padding: 3px 4px;
+    position: relative;        
+    letter-spacing: 1px;
+    width: 100px;
+
+}
+
+.rememberLi:hover {
+    background-color: #ffffff;
+    color: #001F61;
+    cursor:pointer;
+}   
+
+
+/*
+.remember{
+border: solid;
+
+}*/
