@@ -43,6 +43,60 @@ function showThankYou(){
   prism.style.transform = "translateZ(-100px) rotateX( 90deg)";
 }
 
+
+///////////////////////////////////////////////////                                         get id (student, task, manager)
+
+function getStudentId() {
+  if(logToConsole) console.log('getSudentId()');
+  // needs to call the member display and have that return the clicked value. 
+  // have the member display show the card for each item?
+  // MId card for student
+  // THId card for task
+  //MId card for manager
+  //somehow store those three values & return them for assignment
+//functions are in script for dashboard (summary)
+  //script.js:1296 
+
+let assignment={
+  student: '',
+  task:'',
+  manager:''}; // place in it student, task & manager Ids
+
+//dsiplay a member list  
+makeListVisible(); //the buttons & floating panels are not included in this page
+//script.js:322 
+showMembers();
+//script.js:194 
+fetchDb();
+//script.js:186 
+calculateLimitOffset();
+//script.js:1304 
+displayOnList(); //has rowData
+
+//click the memeber chosen
+
+//script.js:519 
+//chooseWhichCardToUse();//this would delete old cards
+//script.js:520 \{MId: '3', MEmail: 'brisia300@lodo.es', MUserName: 'Brisia', MDate: '2024-10-10 20:38:37'\}MDate: "2024-10-10 20:38:37"MEmail: "brisia300@lodo.es"MId: "3"MUserName: "Brisia"[[Prototype]]: Object
+//script.js:536 MId
+
+//script.js:455 
+makeCardsVisible();
+//script.js:546 
+buildNewCard(rowData)();//doesn't delete old card. so can display 3 at once ? But rowData undefined here?
+//script.js:552 
+DisplayOnCard(); //??
+//Clicked row: \{MId: '3', MEmail: 'brisia300@lodo.es', MUserName: 'Brisia', MDate: '2024-10-10 20:38:37'\}  Number of columns= 4
+//script.js:1941 
+showTaskColor();
+//get that MId; from the object & put into assignment{}
+
+}
+
+
+
+
+
 /*                   call server functions                 */
 
 function assignTask(){
@@ -53,14 +107,14 @@ function assignTask(){
   var str, 
   studentId= encodeURIComponent(document.getElementById("studentId").value) , 
   taskTHId=  encodeURIComponent(document.getElementById("taskTHId").value), 
-  managerId= encodeURIComponent(document.getElementById("managerId").value),
-  stageText= encodeURIComponent(document.getElementById("stageText").value);
+  managerId= encodeURIComponent(document.getElementById("managerId").value);
+  //stageText= encodeURIComponent(document.getElementById("stageText").value);
   
   document.getElementById("panel").innerHTML="js assignTask "; 
   str="studentId="+ studentId;
   str+="&taskTHId="+ taskTHId;
   str+="&managerId="+ managerId;
-  str+="&stageText="+stageText;
+  //str+="&stageText="+stageText;
   
   document.getElementById("panel").innerHTML="js createStage has str=<br>  "+str +"<p>";
   /* string prepared to send to server. Has been displayed in 'panel' for user feedback */
@@ -117,7 +171,7 @@ function XMLRequest($fileURL, str){
     //must call response text?  Have I left something out? Wierd, if I comment this like out the script fails
     document.getElementById("panel").innerHTML=" Db call, this.responseText: "+ request.responseText +"<br>";
     }
-    else{document.getElementById("panel").innerHTML+="Else "+this.request.responseText +"<br>"};
+    
   }
   //the request is now to be started with method POST, the url of where the PHP script is, & asynchronous=true
   request.open("POST", $fileURL, true);

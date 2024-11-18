@@ -7,7 +7,7 @@
   <link rel="icon" href="../favicons/favicon.ico" type="image/icon type">
 </head>
 <body>
-<!-- partial:index.partial.html -->
+
 <ul class="nav">
   <li onclick="showAssign()">Assign</li>
   <li onclick="showEdit()">Edit</li>
@@ -27,11 +27,16 @@
         <h2>Assign task</h2>
           
          <div class="field-wrapper"> 
-            <input type="number" min="1" max="9999" name="studentId" id="studentId" placeholder="student Id"required>
+          <input type="button" class="button" value="get student Id" onclick="getStudentId()">
+            <input type="number" min="1" max="99999" name="studentId" id="studentId" placeholder="or enter Id"required>
           </div>        
           <div class="field-wrapper">
-            <input type="number" min="1" max="9999" name="taskTHId" id="taskTHId"  placeholder="Task Id" required>
-            <input type="number" min="1" max="9999" name="managerId" id="managerId" placeholder="manager Id" required>
+            <input type="button" class="button" value="get task Id" onclick="getStudentId()">
+            <input type="number" min="1" max="99999" name="taskTHId" id="taskTHId"  placeholder="or enter Id" required>
+          </div>
+          <div class="field-wrapper">
+            <input type="button" class="button" value="get manager Id" onclick="getStudentId()">
+            <input type="number" min="1" max="99999" name="managerId" id="managerId" placeholder="or enter Id" required>
             <label></label>           
             </div>
           
@@ -79,7 +84,7 @@
     </div>   
     
 <!--                                    Search task             (back)              -->    
-<!-- A search interface to find tasks by student or by task or by author 
+<!-- A search interface to get tasks by student or by task or by author 
 -->    
     <div class="face face-back">
       <div class="content">
