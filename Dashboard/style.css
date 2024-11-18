@@ -416,6 +416,51 @@ font-size: 10px;
 }
 
 
+.remember_button, #remember { /* not effecting */
+    
+	background-color: #fff;
+	border-bottom: solid;
+	border-radius: 5px;
+	box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+	color: #4e425f;
+	font-size: 12px;
+	padding: 3px 4px;
+	position: relative;        
+	letter-spacing: 1px;
+	width: 110px;
+
+}
+
+
+/*Button goes white on hover*/
+.remember_button, #remember:hover {
+	background-color:rgb(42, 38, 95);
+	color: #fff;
+	cursor:pointer;
+}    
+
+
+.rememberLi{ /* effecting */
+background-color: #aa9595;
+border: 0;
+border-radius: 5px;
+box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+color: #fff;
+font-size: 12px;
+padding: 3px 4px;
+position: relative;        
+letter-spacing: 1px;
+width: 100px;
+
+}
+
+.rememberLi:hover {
+background-color: #ffffff;
+color: #001F61;
+cursor:pointer;
+}   
+
+
 
 
 /* Sliding PANEL*/

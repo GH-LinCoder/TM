@@ -23,6 +23,8 @@ cardDiv.id = 'card-floating-btn';
 cardDiv.className = 'card-floating-btn';
 cardDiv.textContent = "# Open or close Card view";
 document.body.appendChild(cardDiv);
+//js way to interact with the card button
+const card_floating_btn = document.querySelector('.card-floating-btn');
 
 //floating list button
 
@@ -31,60 +33,40 @@ cardDiv.id = 'list-floating-btn';
 cardDiv.className = 'list-floating-btn';
 cardDiv.textContent = "= Open or close List view";
 document.body.appendChild(cardDiv);
-
-
-/*                       floating button         open/close jsCard  & stagesCard*/
-const card_floating_btn = document.querySelector('.card-floating-btn');
+//js way to interact with the list button
 const sliding_panel_container = document.querySelector('.sliding-panel-container');
 
 
+var remember=[]; //to store rows of data from different tables (this is then put in $_SESSION)
 var summaryData = [];//assuming the php returns an array of this kind
+//variables for displaying a page of database rows
 var pageNumber = 1, currentPage = 1, limit = 10, offset = 0;
-
-let dataByIdGlobal=[];
-
-//variables for doing db reads by page
 var lengthOfLatestRead = 0; //this is the size of the latest query result. Wrong. Wanted to know how big a full read would be.
 var limit, offset;
 
-//store whatever function was last used. Can then reuse that function by  currentShowListFunc() or currentTableByIdFunction;
+//global so that buttons can have access to dataById that was local to a function
+let dataByIdGlobal=[];
+
+//remember whatever function was last used. Can then reuse that function by  currentShowListFunc() or currentTableByIdFunction;
 var currentShowListFunc = showSummary; //for displaying lists from specific tables
 var currentTableByIdFunction = memberById;          //for card display of a single row of a table
 
 var stageNumber = 1, currentStage = 1; //arbitrary test numbers
 var currentStep = 1, stepNumber =1;
-//                                                   create javascript names for places in the webpage
 
-/*                                                    summary face
-let memberSummary = document.querySelector("#memberSummary");
-let studentSummary = document.querySelector("#studentSummary");
-let managerSummary = document.querySelector("#managerSummary");
-let authorSummary = document.querySelector("#authorSummary");
-let taskSummary = document.querySelector("#taskSummary");
-let stagesSummary = document.querySelector("#stagesSummary");
-let tasklistSummary = document.querySelector("#tasklistSummary");
+//console.log('remeber[0]='+remember[0]);
 
-//           DIFFERENT                                         long side faces functions
+if(!remember[0]){//always true at this stage of script??
+  console.log('remember[0] in if'); loadSESSIONArray(); 
+}
+  // remember stores data that the user wants to remember. 
+//the remember array is also loaded into $_SESSION. If remeber is empty there may be a stored version in SESSION
 
-if(titleValue=='people'){
-
-let totalStudent = document.querySelector("#totalStudent");
-let totalAuthors = document.querySelector("#totalAuthors");
-let totalManagers = document.querySelector("#totalManagers");
-let totalMembers = document.querySelector("#totalMembers");
-}else{
-
-  //            DIFFERENT                                        long side faces functions 
-let totalTasklist = document.querySelector("#totalTasklist");
-let totalTasks = document.querySelector("#totalTasks");
-let totalStages = document.querySelector("#totalStages");
-
-} */
 
 
 ////////////////////////////////////////////////////////                                summary 
 
-// fetch the summary data
+// fetch the summary data as the first thing that happens after loading page
 fetchSummary();
 /* Display the summary face as the first display */
 showSummary();
@@ -148,8 +130,6 @@ function fetchSummary() {
 ////////////////////////////////////////////////////////                                    end of summary  ////////////////////
 
 
-
-
 ////////////////////////////////////////                                      Read a datbase  row              ////////////////////
 
 async function fetchDbSingle(url, str) {
@@ -174,10 +154,6 @@ async function fetchDbSingle(url, str) {
     throw error; // Re-throw the error to be handled by the caller
   }
 }
-
-
-
-
 
 
 /////////////////////////////////////////////////////                              Read a page from Db to list  
@@ -223,7 +199,7 @@ async function memberById(key) {//need get the MId? and pass it on?
     if(logToConsole) console.log(' memberById() ');
   const dataById = await fetchDbSingle('../QueryDb/QueryDbTableById.php', str);
   console.log(dataById);
-  buildDisplayCardMain(dataById);
+  buildSingleGenericCard(dataById);
   currentTableByIdFunction = memberById;
 }
 
@@ -239,7 +215,7 @@ async function studentById(key) {//probably doesn't work as it just reads taskli
   const dataById = await fetchDbSingle('../QueryDb/QueryDbStudentById.php', str);
   //TableById is generic, doesn't put coliumns in good order & doesn't do foreign key lookup
   //console.log(dataById); //undefined ? Why? & logs BEFORE fetch logs
-  buildDisplayCardMain(dataById);
+  buildSingleGenericCard(dataById);
   currentTableByIdFunction = studentById;
 }
 
@@ -248,7 +224,7 @@ async function taskById(key) {//need get the MId? and pass it on?
   if(logToConsole) console.log('taskById:' + str);
   const dataById = await fetchDbSingle('../QueryDb/QueryDbTableById.php', str);
   //console.log(dataById); //undefined ? Why? & logs BEFORE fetch logs
-  buildDisplayCardMain(dataById);
+  buildSingleGenericCard(dataById);
   currentTableByIdFunction = taskById;
 }
 
@@ -257,7 +233,7 @@ async function stagesById(key) {//need get the MId? and pass it on?
   if(logToConsole) console.log('taskById:' + str);
   const dataById = await fetchDbSingle('../QueryDb/QueryDbTableById.php', str);
   //console.log(dataById); //undefined ? Why? & logs BEFORE fetch logs
-  buildDisplayCardMain(dataById);
+  buildSingleGenericCard(dataById);
   currentTableByIdFunction = stagesById;
 }
 
@@ -266,7 +242,7 @@ async function tasklistById(key) {//need get the MId? and pass it on?
   if(logToConsole) console.log('taskById:' + str);
   const dataById = await fetchDbSingle('../QueryDb/QueryDbTableById.php', str);
   //console.log(dataById); //undefined ? Why? & logs BEFORE fetch logs
-  buildDisplayCardMain(dataById);
+  buildSingleGenericCard(dataById);
   currentTableByIdFunction = tasklistById;
 }
 
@@ -478,7 +454,7 @@ document.getElementById("cardPersonId").innerHTML ='<b>'+ name +'</b> '+'['+KeyR
   for (i = 2; i < headersLength; i++) {
     item = headers[i];
     console.log(item); //correct StudentId
-    let value = item;  // don't use . dot notation for variables
+    let value = item;  
     document.getElementById('column' + i).innerText = value;
 
     item = headers[i];
@@ -487,7 +463,7 @@ document.getElementById("cardPersonId").innerHTML ='<b>'+ name +'</b> '+'['+KeyR
     document.getElementById('PersonContent' + i).innerText = value;
   }
 
-  populateCardNav(0, '?');
+  populateCardNav(0, '?');//we don't yet  know how many items there are. Item 0 of ? items
 }
 
 
@@ -496,13 +472,11 @@ function studentCard(studentId){
   makeCardsVisible();
   readDbForThisStudentId(studentId).then(dataById => {
     console.log("Received data:", dataById);
-    dataByIdGlobal=dataById;
+    dataByIdGlobal=dataById;// so dataById is available to other code when button clicked
     console.log(dataByIdGlobal);
     headers = Object.keys(dataById[0]);
   //  lengthOfHeaders=headers.length;
-  console.log(headers);
-  //document.getElementById('panel').innerHTML += 'The headers are: ' + headers;
-  
+  console.log(headers);  
   createCardThisNumberOfHeaders(headers.length);
   populateCard(dataById, headers, headers.length, 0);
   
@@ -530,30 +504,139 @@ function chooseWhichCardToUse(rowData){ //A row in a list has been clicked. That
     break; 
     case "ManagerId":
     console.log(itemName);
-    buildDisplayCardMain(rowData);
+    buildSingleGenericCard(rowData);
     break; 
     case "MId":
     console.log(itemName);
-    buildDisplayCardMain(rowData);
+    buildSingleGenericCard(rowData);
     break; 
 
-default: console.log('unknown: '+itemName); buildDisplayCardMain(rowData);
+default: console.log('unknown: '+itemName); buildSingleGenericCard(rowData);
 }
 }
 
 
-function buildDisplayCardMain(rowData) {
-  if(logToConsole) console.log('buildDisplayCardMain()');
+function deleteOldCard(rowData){
+  // rowData is an object  { label: 'value' , label:'value'...   }
+  if(logToConsole) console.log('deleteOldCard()');
+  headers = Object.keys(rowData);
+  //console.log("DisplayOnCard() Clicked row:", rowData, " Number of columns=", headers.length);
+  document.getElementById('panel').innerHTML = 'The headers are: ' + headers;//works
+}
+
+
+function buildSingleGenericCard(rowData) {
+  if(logToConsole) console.log('buildSingleGenericCard()');
 makeCardsVisible();
-
+deleteOldCard(rowData);
+buildNewCard(rowData);
   //console.log(rowData);
   // rowData is an object  { label: 'value' , label:'value'...   }
-  headers = Object.keys(rowData);
-  console.log("DisplayOnCard() Clicked row:", rowData, " Number of columns=", headers.length);
-  document.getElementById('panel').innerHTML = 'The headers are: ' + headers;//works
+  //console.log("DisplayOnCard() Clicked row:", rowData, " Number of columns=", headers.length);
+}
 
-  ////////// try to remove old card if it exists
 
+//////////////////  brought over from someJavascriptCode.js  21:11 16 Nov 2024
+
+
+function rememberProcess(remember){
+    if(logToConsole) console.log('RememberProcess()');
+for(i=0;i<remember.length;i+=2){
+    console.log('Item ',i/2+1,' of ', remember.length/2,' items', 'Remember as ',remember[i], remember[i+1]);}        
+}
+
+function storeSESSIONArray(rememberArray){ //put the local remember[] into $_SESSION
+  if(logToConsole) console.log('storeSESSIONArray()');
+  fetch('../QueryDb/storeSESSIONArray.php', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(rememberArray)
+})
+.then(response => response.json())
+.then(result => { 
+  console.log(result); // this retrieved the array of 1 row
+    // Handle the server's response
+})
+.catch(error => {
+    console.error('Error:', error);
+});
+}
+
+function loadSESSIONArray(){
+  if(logToConsole) console.log('loadSESSIONArray()');
+  fetch('../QueryDb/loadSESSIONArray.php')
+  .then(response => response.json())
+  .then(result => {
+      // Use the result
+     // console.log('result[0]='+result[0]);
+      rememberProcess(result);
+      remember=result; //store the session data in the local remember[]
+  })
+  .catch(error => {
+      console.error('Error loadSESSIONArray:', error);
+  });
+  }
+
+function putDataIntoRemember(menuHeader,rowData){
+    if(logToConsole) console.log('putDataIntoRemember()'+menuHeader );
+    remember.push(menuHeader);
+    remember.push(rowData);
+}
+/*
+function deleteMenu(menuLu){
+    if(logToConsole) console.log('deleteMenu()');
+    console.log(menuLu);
+    menuLu.parentNode.removeChild(menuLu);
+}
+    */
+
+function deleteMenu(menuLu) {
+  if (menuLu && menuLu.parentNode) {
+    menuLu.parentNode.removeChild(menuLu);
+//    console.log("Menu removed successfully");
+  } else {
+    console.error("Menu or its parent not found");
+  }
+}
+
+function showRememberMenu(rowData){
+    if(logToConsole) console.log('showRememberMenu()');
+
+ if(document.querySelector('#rememberMenu') ) return; //menu already exists
+ 
+    const remember_button = document.querySelector('#remember');
+    const menuHeaders=['EXIT no save', 'as Student', 'as Manager', 'as Author', 'as Task' , 'as Note'];
+    menuLu=document.createElement('lu');
+    menuLu.id='rememberMenu';
+
+for(let i=0;i<menuHeaders.length;i++){
+    li=document.createElement('li');               //  console.log(menuHeaders[i]);//ok
+    li.innerText=menuHeaders[i]; // li.innerHTML = `Remember as ${menuHeaders[i]}`; //Gemini suggests this syntax 
+    li.id=menuHeaders[i];
+    li.classList.add('rememberLi');
+    
+    li.addEventListener('click', () => { console.log('li button clicked', menuHeaders[i], rowData)
+        if(menuHeaders[i]==='EXIT no save') {deleteMenu(menuLu);return};
+    putDataIntoRemember(menuHeaders[i], rowData);//[header][rowData]    
+    storeSESSIONArray(remember);   
+    rememberProcess(remember);//do something with the stored data structure
+    deleteMenu(menuLu);
+      })
+
+    menuLu.appendChild(li);
+    }
+
+remember_button.appendChild(menuLu);      
+}
+
+////////////////
+
+
+
+function buildNewCard(rowData){
+  if(logToConsole) console.log('buildNewCard()');
   headerElement = document.getElementById('cardTopLeft');
   if (headerElement) { //if there is a headerRow that means a table has already been built & displayed
     // Table exists, therefore remove it
@@ -595,7 +678,7 @@ makeCardsVisible();
   //create all the remaining columns with their database names. Start at 1 (the key reference number was item 0)
   i = 1;
   while (i < headers.length) {
-    let cardDivj = document.createElement('div');
+    var cardDivj = document.createElement('div');
     let cardDivTitle = document.createElement('h8');
     cardDivTitle.style.padding = '3px';
     cardDivTitle.textContent = [headers[i]];
@@ -606,16 +689,33 @@ makeCardsVisible();
     cardDivContent.classList.add = 'cardContent';
     cardDivContent.textContent = rowData[headers[i]];
     cardDivj.appendChild(cardDivContent);
-    cardDiv.appendChild(cardDivj);
     i++;
+    cardDiv.appendChild(cardDivj);
+  
   }
+
+                                                          // NEW  REMEMBER BUTTON   21:39 16 Nov 2024
+  let cardRemember=document.createElement('button');
+  cardRemember.id='remember';
+  cardRemember.innerText='remember this';
+  cardRemember.classList.add='remember_button';
+
+  cardRemember.addEventListener('click', (event) => {
+if(event.target===cardRemember)   showRememberMenu(rowData);
+  });
+  cardDivj.appendChild(cardRemember);
+
+// a remember button
+
+
+
 
   //nav table to click through the other records
 
 
   //                      dynamic Card nav buttons & display
 
-  cardDivNav = document.createElement('div');
+let  cardDivNav = document.createElement('div');
   cardDivNav.id = 'cardDivNav';
   cardDivNav.className = 'stageNumber-info';
   //cardDivNav.textContent = "cardDivNav";
@@ -678,6 +778,7 @@ makeCardsVisible();
   nextItemButton.classList.add('btn');
   cell.appendChild(nextItemButton);
 
+
   /* Close button */
 
   let itemNumber = rowKey;
@@ -721,7 +822,7 @@ makeCardsVisible();
     showTaskColor(currentItem, itemNumber);
     //call the function to reread the database
     //currentShowListFunc(); //this is a list function if card displayed after clicking list.
-    //buildDisplayCardMain(rowData);//is rowData available here? Yes, but is not incremented. Need to call db
+    //buildSingleGenericCard(rowData);//is rowData available here? Yes, but is not incremented. Need to call db
 
     // memberById(currentItem); //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<needs to be generic not just members
     console.log(currentTableByIdFunction);
@@ -741,7 +842,7 @@ makeCardsVisible();
     /*document.getElementById('taskId').innerHTML=taskNumber;	*/
     showTaskColor(currentItem, itemNumber);
   })
-};  /////////////////////////                                         end of buildDisplayCardMain(rowData)
+};  /////////////////////////                                         end of buildSingleGenericCard(rowData)
 
 
 
@@ -1740,7 +1841,7 @@ showPageColor();
 async function buildStagesCardIfNeeded(keyHeader, rowKey, stageToDisplay) {
   if(logToConsole) console.log('buildStagesCardIfNeeded');
   //console.log('buildSatgesCardIfNeeded');
-  //console.log("buildDisplayCardMain():"+currentShowListFunc);
+  //console.log("buildSingleGenericCard():"+currentShowListFunc);
   //console.log("CARD:"+currentTableByIdFunction);
   //console.log(keyHeader,rowKey);
   if (keyHeader == 'THId') {
@@ -2005,3 +2106,32 @@ const list_floating_btn = document.querySelector('.list-floating-btn');
 list_floating_btn.addEventListener('click', () => {
   list_sliding_panel_container.classList.toggle('visible')
 });
+
+
+//                                                   create javascript names for places in the webpage
+
+/*                                                    summary face
+let memberSummary = document.querySelector("#memberSummary");
+let studentSummary = document.querySelector("#studentSummary");
+let managerSummary = document.querySelector("#managerSummary");
+let authorSummary = document.querySelector("#authorSummary");
+let taskSummary = document.querySelector("#taskSummary");
+let stagesSummary = document.querySelector("#stagesSummary");
+let tasklistSummary = document.querySelector("#tasklistSummary");
+
+//           DIFFERENT                                         long side faces functions
+
+if(titleValue=='people'){
+
+let totalStudent = document.querySelector("#totalStudent");
+let totalAuthors = document.querySelector("#totalAuthors");
+let totalManagers = document.querySelector("#totalManagers");
+let totalMembers = document.querySelector("#totalMembers");
+}else{
+
+  //            DIFFERENT                                        long side faces functions 
+let totalTasklist = document.querySelector("#totalTasklist");
+let totalTasks = document.querySelector("#totalTasks");
+let totalStages = document.querySelector("#totalStages");
+
+} */
