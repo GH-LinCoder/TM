@@ -21,7 +21,7 @@ INNER JOIN members AS membersMan ON tasklist.ManagerId=membersMan.MId;";
    $limit  =min ($limit, $total_rows-$offset);
 
 //the query is different for each function file
-$sql = "SELECT tasklist.ManagerId,  membersMan.MUserName AS ManagerName,  tasklist.StudentId, membersSt.MUserName AS StudentName, tasklist.TaskId, tasksheader.TaskName, tasklist.Stage, tasklist.TLId \n"
+$sql = "SELECT membersMan.MUserName AS ManagerName, tasklist.ManagerId AS MId,  membersSt.MUserName AS StudentName, tasklist.StudentId AS Id,  tasksheader.TaskName, tasklist.TaskId,  tasklist.Stage, tasklist.TLId \n"
 
     . "FROM `tasklist`\n"
 

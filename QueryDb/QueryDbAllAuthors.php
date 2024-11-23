@@ -9,10 +9,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 //     below is specific to each table in 2 places
         // Validate offset and limit
 
-$count_query = "SELECT COUNT(*) FROM `tasklist`
-INNER JOIN tasksheader ON tasklist.TaskId=tasksheader.THId
-INNER JOIN members AS membersSt ON tasklist.StudentId=membersSt.MId 
-INNER JOIN members AS membersMan ON tasklist.ManagerId=membersMan.MId;";
+$count_query = "SELECT ( SELECT COUNT(THId) FROM `tasksheader`) + ( SELECT COUNT(TSId) FROM `tasksstages`) AS totalAuthored;";
+//;
    $result = mysqli_query($conn, $count_query);
    $total_rows = mysqli_fetch_row($result)[0];
    
@@ -21,16 +19,20 @@ INNER JOIN members AS membersMan ON tasklist.ManagerId=membersMan.MId;";
    $limit  =min ($limit, $total_rows-$offset);
 
 //the query is different for each function file
-$sql = "SELECT membersSt.MUserName AS StudentName, tasklist.StudentId AS Id, tasksheader.TaskName, tasklist.TaskId,  tasklist.Stage, membersMan.MUserName AS ManagerName,  tasklist.ManagerId AS Mid, tasklist.TLId \n"
 
-    . "FROM `tasklist`\n"
+$sql =  "SELECT members.MUserName AS AuthorName, tasksheader.TaskAuthor AS Id, tasksheader.TaskName AS TheTask, tasksheader.TaskDesc AS Description \n"
 
-    . "INNER JOIN tasksheader ON tasklist.TaskId=tasksheader.THId\n"
+. "FROM `tasksheader` \n"
 
-    . "INNER JOIN members AS membersSt ON tasklist.StudentId=membersSt.MId \n"
+. "INNER JOIN members WHERE TaskAuthor=members.MId \n"
 
-    . "INNER JOIN members AS membersMan ON tasklist.ManagerId=membersMan.MId ORDER BY StudentId LIMIT $limit OFFSET $offset;";
+. "UNION \n"
 
+. "SELECT members.MUserName AS AuthorName, tasksstages.StageAuthor AS Id, tasksstages.StageName AS Stage, tasksstages.StageDesc \n"
+
+. "FROM `tasksstages` \n"
+
+. "INNER JOIN members WHERE StageAuthor=members.MId LIMIT $limit OFFSET $offset;";
     // Run a SQL query
 
 

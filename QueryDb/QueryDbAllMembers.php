@@ -8,31 +8,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 //     below is specific to each table in 2 places
         // Validate offset and limit
-
-$count_query = "SELECT COUNT(*) FROM `tasklist`
-INNER JOIN tasksheader ON tasklist.TaskId=tasksheader.THId
-INNER JOIN members AS membersSt ON tasklist.StudentId=membersSt.MId 
-INNER JOIN members AS membersMan ON tasklist.ManagerId=membersMan.MId;";
-   $result = mysqli_query($conn, $count_query);
-   $total_rows = mysqli_fetch_row($result)[0];
-   
-   // Adjust limit if necessary
-   $offset = min($offset, $total_rows-1);
-   $limit  =min ($limit, $total_rows-$offset);
+ 
+        $count_query = "SELECT COUNT(*) FROM `members` "; // table name specific
+        $result = mysqli_query($conn, $count_query);
+        $total_rows = mysqli_fetch_row($result)[0];
+        
+        // Adjust limit if necessary
+        $offset = min($offset, $total_rows-1);
+        $limit  =min ($limit, $total_rows-$offset);
 
 //the query is different for each function file
-$sql = "SELECT membersSt.MUserName AS StudentName, tasklist.StudentId AS Id, tasksheader.TaskName, tasklist.TaskId,  tasklist.Stage, membersMan.MUserName AS ManagerName,  tasklist.ManagerId AS Mid, tasklist.TLId \n"
-
-    . "FROM `tasklist`\n"
-
-    . "INNER JOIN tasksheader ON tasklist.TaskId=tasksheader.THId\n"
-
-    . "INNER JOIN members AS membersSt ON tasklist.StudentId=membersSt.MId \n"
-
-    . "INNER JOIN members AS membersMan ON tasklist.ManagerId=membersMan.MId ORDER BY StudentId LIMIT $limit OFFSET $offset;";
-
-    // Run a SQL query
-
+$sql = "SELECT MUserName, MId, MEmail, MDate FROM `members`  LIMIT $limit OFFSET $offset;";
 
 //------------------------------------
 // Run the SQL query. Below is identical in different functions
@@ -43,7 +29,7 @@ $result = mysqli_query($conn, $sql);
 // Fetch the result data
 if (mysqli_num_rows($result) > 0) {
 $dbData = [];
-//$result = mysqli_query($conn, $sql);//why repeated?
+//$result = mysqli_query($conn, $sql);
 
 $i = 0;
 while ($row = mysqli_fetch_assoc($result)) {
