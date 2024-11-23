@@ -50,27 +50,97 @@ let dataByIdGlobal=[];
 //remember whatever function was last used. Can then reuse that function by  currentShowListFunc() or currentTableByIdFunction;
 var currentShowListFunc = showSummary; //for displaying lists from specific tables
 var currentTableByIdFunction = memberById;          //for card display of a single row of a table
-
+var callFunction = showSummary;
 var stageNumber = 1, currentStage = 1; //arbitrary test numbers
 var currentStep = 1, stepNumber =1;
 
 //console.log('remeber[0]='+remember[0]);
+//too early panels not yet built
+
+
 
 if(!remember[0]){//always true at this stage of script??
-  console.log('remember[0] in if'); loadSESSIONArray(); 
+  console.log('remember[0] in if'+remember[0]); loadSESSIONArray(); 
 }
   // remember stores data that the user wants to remember. 
 //the remember array is also loaded into $_SESSION. If remeber is empty there may be a stored version in SESSION
 
+//display the remember contents in the table list?
+//window.onload = (event) => {
+  //createHeader();
+  
+// fetch the summary data as the first thing that happens after loading page
+//fetchSummary();
+/* Display the summary face as the first display */
+//showSummary();
 
+fetchSummary();
+window.onload = (event) => {//go direct to the function chosen in the previous page
+  const urlFunc = new URLSearchParams(window.location.search);
+  const funcToCall = urlFunc.get(urlFunc.keys().next().value);
+  console.log('url funcToCall '+funcToCall);
+  switch(funcToCall){
+  case'Authors': showAuthorsTasks();break;
+  case'Members':showMembers();break;
+  case'Managers':showManagers();break;
+  case'Students':showStudents();break;
+  
+  case'Tasklist':showTasklist();break;
+  case'Tasks':showTasks();break;
+  case'Stages':showStages();break;
+  default:  showSummary(); break;
+  
+  }
+  }
+  
+
+
+
+function displayArrayOnTable(){//show most recent entries on table
+ // makeListVisible(); //not sure it is good to show this automatically
+ createHeader();
+ console.log(remember.length);
+ //i=remember.length-2;i>0;i-=2 shows all in most recent first
+ let row = table.insertRow();
+ let cell = row.insertCell();
+ cell.innerHTML ='<b>remember</b>';
+ cell = row.insertCell();
+ cell.innerHTML ='<i>The most recent of the stored '+remember.length/2+' items of remembered data. These may autoload into action pages</i>';
+ 
+let cellsToDisplay = Math.min(40, remember.length); //40 cells is 20 rows. Each row is a label + an object
+//console.log(cellsToDisplay);
+ for (i=cellsToDisplay;i>-1;i-=2) {
+   //console.log("currentPage= ", currentPage);
+   row = table.insertRow();
+   row.classList.add('table-row'); 
+if(!remember[i]) continue;
+   cell = row.insertCell();
+  // console.log(remember[i], remember[i+1]);
+   cell.innerText = remember[i];
+   cell = row.insertCell();
+   let arrayObject=remember[i+1];//this can be logged, but it doesn't display on table  as student [Object Object]
+  // arrayObject = Object.values(arrayObject);  //Gemini said this would work maybe, but not ideal. It sometimes did, but then threw errors
+  cell.innerText = JSON.stringify (arrayObject); //shows whole object not very readbale, but complete
+   /*
+for(i=0;i<remember[rowData].length;i++){
+ const cell = row.insertCell();
+     //could make url into links
+
+      cell.innerText = remember[i];
+}*/
+}
+for(i=0;i<remember.length;i+=2){
+  // console.log('Item ',i/2+1,' of ', remember.length/2,' items', 'Remember as ',remember[i], remember[i+1]);
+  }        
+
+
+}
 
 ////////////////////////////////////////////////////////                                summary 
 
-// fetch the summary data as the first thing that happens after loading page
-fetchSummary();
-/* Display the summary face as the first display */
-showSummary();
+
 //                                     After data fetched from database put each specific result in the relevant place on the web page
+
 
 function putDataInSummary(summaryData) {
   //                                          The people related data
@@ -294,13 +364,13 @@ async function showManagers() {//display managers
 }
 
 async function showMembers() {//display user details
-  makeListVisible();
   if(logToConsole) console.log('showMembers()');
+  makeListVisible();
   prism.style.transform = "translateZ(-100px) rotateY( 180deg)";
   document.getElementById('panel').innerHTML = 'The member table shows the member unique key MId, the user name  MUserName,  email address MEmail, & MDate became a member'+
   '<br> Click on a row in the list to display it on a card';
   //need fetch data: members
-  memberData = await fetchDb('../QueryDb/QueryDbMembers.php');
+  memberData = await fetchDb('../QueryDb/QueryDbAllMembers.php');
 
   //document.getElementById("panel").innerHTML = "Members [" + memberData[0].MId + "]";
   currentShowListFunc = showMembers;
@@ -316,9 +386,11 @@ async function showAuthorsTasks() {//display tasks
     '<p><i>stages</i> has a unique reference  TSId & then<br>TaskId, StageNum, StageDesc, StageAuthor, StageFaq, StageDate'+
     '<br> Click on a row in the list to display it on a card';
   //need fetch data: tasks & stages
-  authorDataTasks = await fetchDb('../QueryDb/QueryDbTaskHeaders.php');
-  authorDataStages = await fetchDb('../QueryDb/QueryDbStages.php');
-  displayOnList(authorDataTasks);
+//  authorDataTasks = await fetchDb('../QueryDb/QueryDbTaskHeaders.php');
+  //authorDataStages = await fetchDb('../QueryDb/QueryDbStages.php');
+  authorData = await fetchDb('../QueryDb/QueryDbAllAuthors.php');
+
+  displayOnList(authorData);
   // displayOnList(authorDataStages); // The 2nd one is added to bottom of first, but they don't fit on panel. Need to do separately
   currentShowListFunc = showAuthorsTasks;
 
@@ -331,9 +403,11 @@ async function showAuthorsStages() {//display tasks
   document.getElementById('panel').innerHTML = 'The authors data is collected from two tables. The taskheader has a unique reference and other columns  THId,  TaskName,  TaskDesc,  TaskAuthor,  TaskFaq,  TaskDate.  ' +
     'The stages table has a unique reference and other columns  TSId,  TaskId,  StageNum,   StageDesc,   StageAuthor,  StageFaq,  StageDate';
   //need fetch data: tasks & stages
-  authorDataTasks = await fetchDb('../QueryDb/QueryDbTaskHeaders.php');
-  authorDataStages = await fetchDb('../QueryDb/QueryDbStages.php');
-  displayOnList(authorDataStages); // The 2nd one is added to bottom of first, but they don't fit on panel. Need to do separately
+//  authorDataTasks = await fetchDb('../QueryDb/QueryDbTaskHeaders.php');
+//  authorDataStages = await fetchDb('../QueryDb/QueryDbStages.php');
+authors = await fetchDb('../QueryDb/QueryDbAllManagers.php'); 
+
+displayOnList(authors); // The 2nd one is added to bottom of first, but they don't fit on panel. Need to do separately
   currentShowListFunc = showAuthorsStages;
   makeListVisible();
 }
@@ -539,10 +613,10 @@ buildNewCard(rowData);
 //////////////////  brought over from someJavascriptCode.js  21:11 16 Nov 2024
 
 
-function rememberProcess(remember){
-    if(logToConsole) console.log('RememberProcess()');
-for(i=0;i<remember.length;i+=2){
-    console.log('Item ',i/2+1,' of ', remember.length/2,' items', 'Remember as ',remember[i], remember[i+1]);}        
+function logRemember(remember){
+    if(logToConsole) console.log('logRemember()');
+//for(i=0;i<remember.length;i+=2){
+  //  console.log('Item ',i/2+1,' of ', remember.length/2,' items', 'Remember as ',remember[i], remember[i+1]);}        
 }
 
 function storeSESSIONArray(rememberArray){ //put the local remember[] into $_SESSION
@@ -571,10 +645,14 @@ function loadSESSIONArray(){
   .then(result => {
       // Use the result
      // console.log('result[0]='+result[0]);
-      rememberProcess(result);
+     // logRemember(result);
       remember=result; //store the session data in the local remember[]
+  console.log(remember);
+   displayArrayOnTable(); // new 22:02 21 Nov 2024
+        //when empty the session var? when empty remember?
   })
   .catch(error => {
+
       console.error('Error loadSESSIONArray:', error);
   });
   }
@@ -621,7 +699,7 @@ for(let i=0;i<menuHeaders.length;i++){
         if(menuHeaders[i]==='EXIT no save') {deleteMenu(menuLu);return};
     putDataIntoRemember(menuHeaders[i], rowData);//[header][rowData]    
     storeSESSIONArray(remember);   
-    rememberProcess(remember);//do something with the stored data structure
+    logRemember(remember);//do something with the stored data structure
     deleteMenu(menuLu);
       })
 
@@ -631,7 +709,7 @@ for(let i=0;i<menuHeaders.length;i++){
 remember_button.appendChild(menuLu);      
 }
 
-////////////////
+////////////////                                                     Build Card                   /////////////
 
 
 
@@ -687,7 +765,10 @@ function buildNewCard(rowData){
     // add the values from the database under the database column names   
     let cardDivContent = document.createElement('div');
     cardDivContent.classList.add = 'cardContent';
-    cardDivContent.textContent = rowData[headers[i]];
+    let text=rowData[headers[i]];
+    if(rowData[headers[i]].startsWith( 'http' )) {text=convertToURL(rowData[headers[i]])};
+    cardDivContent.innerHTML = text;
+    //cardDivContent.textContent = rowData[headers[i]];
     cardDivj.appendChild(cardDivContent);
     i++;
     cardDiv.appendChild(cardDivj);
@@ -1391,7 +1472,7 @@ console.log(typeof(itemToDisplay));
 
 
 
-//////////////////////////////                                         display on list            ////////////////////
+//////////////////////////////                                         display on list   build list table         ////////////////////
 
 function makeListVisible(){
   if(logToConsole) console.log('makeListVisible()');
@@ -1401,22 +1482,27 @@ function makeListVisible(){
 }
 
 
-function displayOnList(dataForList) {
-  if(logToConsole) console.log('displayOnList()');
-  //check if a table has already been built (use the id='headerRow' that was applied for this purpose)
+function createHeader(){  
   headerElement = document.getElementById('headerRow');
 
   if (headerElement) { //if there is a headerRow that means a table has already been built & displayed
     // Table exists, therefore remove it
-    const table = headerElement.parentNode; // Get the parent table element
+    let table = headerElement.parentNode; // Get the parent table element
     table.parentNode.removeChild(table); // Remove the old stuff appended to the table
     //the html table seems to still exist after this
+//    return table;
   }
 
   //build the headers row which has a different style to rest of rows
   let headerRow = table.insertRow();
   headerRow.classList.add('headerRow');
-  headerRow.id = 'headerRow'; //this id is to be able to identify if a list has already been shown on the table 
+  headerRow.id = 'headerRow'; //this id is to be able to identify if a list has already been shown on the table }
+}
+
+function displayOnList(dataForList) {
+  if(logToConsole) console.log('displayOnList()');
+  //check if a table has already been built (use the id='headerRow' that was applied for this purpose)
+createHeader();
 
   //HEADER get the lables of the headers from the data
   let headers = Object.keys(dataForList[0]);
@@ -1424,10 +1510,11 @@ function displayOnList(dataForList) {
   //HEADER create cells in the table and insert the header names
   for (var head in headers) {
     cell = headerRow.insertCell(); cell.textContent = headers[head];
+    //could vary color here for different tables
   }
 
   // Data ROWS - outer loop is for the number of rows there are in dataForList     
-  console.log("Length of rowData:", dataForList.length, "currentPage= ", currentPage);//if length < limit, this is final page
+  //console.log("Length of rowData:", dataForList.length, "currentPage= ", currentPage);//if length < limit, this is final page
   if (dataForList.length < limit) { finalPage = true; console.log('Loop finalPage=', finalPage) } else finalPage = false;
   for (const rowData of dataForList) {
     //console.log("currentPage= ", currentPage);
@@ -1449,16 +1536,30 @@ function displayOnList(dataForList) {
     //Inner loop is for how many columns there are in each row
     for (const header in rowData) {
       const cell = row.insertCell();
-      cell.textContent = rowData[header]; // how this works is beyond me
+      //could make url into links
+     // console.log('rowData[header] '+rowData[header]);
+      let text=rowData[header];
+    if(rowData[header].startsWith( 'http' )) {text=convertToURL(rowData[header])};
+      cell.innerHTML = text;
+      
     }
   }
+
+
   //add the pageDisplayed & totalPages to left of nav buttons  "Page X of Y Pages" Bad 3 Nov 2024
   //the js doesn't know the potential totla number of pages. It doesn't know the total number of rows. Should be possible for the PHP to include that in the result, but not sure how to do this
   document.getElementById('pageDisplayed').innerHTML = offset / limit + 1;
   document.getElementById('pageTotal').innerHTML = limit;
 } /////////////////////////////////////////////////////////////////                     end of displayOnList()
 
-
+function convertToURL(text){
+  if(logToConsole) console.log('convertToUrl()');
+  //<a href="url">link text</a>
+  //<a href="https://www.w3schools.com/" target="_blank">Visit W3Schools!</a>
+  text='<a href=" '+text+' " target="_blank">'+text+'</a> New window';
+  //console.log(text);
+      return(text);
+    }
 
 
 
@@ -1571,7 +1672,7 @@ function dbTaskStages() {
 
 async function dbMembers() {
   if(logToConsole) console.log('dbMembers');
-  data = await fetchDb('../queryDb/QueryDbMembers.php');
+  data = await fetchDb('../queryDb/QueryDbAllMembers.php');
 }
 
 
@@ -1652,7 +1753,7 @@ function myDbDetails() {
 
 
 
-////////////////////////////////                                                  List panel & table  ////////////////////
+////////////////////////////////  displayOnList() builds the list table          List panel & list table  ////////////////////
 
 /*                       floating panel for list         */
 const list_sliding_panel_container = document.querySelector('.list-sliding-panel-container');

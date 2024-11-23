@@ -46,12 +46,14 @@
     <div class="rec-prism"><!-- The munus are on faces of a cube -->
 
       <!-- Dashboard shows a count of different parts of the database. How many members, how many students how many managers how many assigned tasks                   -->
+ 
+ 
       <!--                                            Student          front -->
       <div class="face face-front">
         <div class="content">
           <h2>Student</h2>
           <div>
-            <input type="button" class="button" id=totalStudent value="Total students [14] " onclick="showStudents()">
+            <input type="button" class="button" id=totalStudent value="Total students [awaiting] " onclick="showStudents()">
           </div>
 
           <div><input type="number" min="1" max="9999" name="MId" id="MId"placeholder="Member Id" required><label for="MId">Member Id</label>
@@ -214,11 +216,11 @@
 
           <div class="tasks"> <!--      the tasks are on a different page             -->
             <input type="button" class="button" id=tasklistSummary value="awaiting data"
-              onclick="window.location.href='./Tasks.html';">
+              onclick="window.location.href='./Tasks.html?func=Tasklist';">
             <input type="button" class="button" id=taskSummary value="awaiting data"
-              onclick="window.location.href='./Tasks.html';">
+              onclick="window.location.href='./Tasks.html?func=Tasks';">
             <input type="button" class="button" id=stagesSummary value="awaiting data"
-              onclick="window.location.href='./Tasks.html';">
+              onclick="window.location.href='./Tasks.html?func=Stages';">
 
           </div>
 

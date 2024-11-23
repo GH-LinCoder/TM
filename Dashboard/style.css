@@ -261,8 +261,7 @@ padding-bottom: 15px;
 }
 
 .listRow:hover{scale:1.01;
-	background-color:lightgrey;}
-	
+	background-color:lightgrey;} 
 	
 	
 	@media screen and (max-width: 480px) {
@@ -283,7 +282,7 @@ padding-bottom: 15px;
 	width:100%;
 	padding:3px;
 	border-radius: 10px;
-    background-color: rgb(203, 199, 170);
+    
 	box-shadow: 0 16px 22px -17px #03153B;
 	color: #2A265F;
 	
@@ -292,7 +291,7 @@ padding-bottom: 15px;
 
 .headerRow{
 	font-weight: bold;
-	background-color: #2A265F;
+	background-color: rgb(42, 38, 95);/* Doesn't override if td has a set color*/
 	color: #fff;
 }
 
@@ -311,7 +310,7 @@ padding-bottom: 15px;
 
 .table-row:hover{
 	scale:1.01;
-	background-color:#bbb;
+	background-color:#58d673;
 	cursor:pointer;
 }
 
@@ -570,13 +569,7 @@ cursor:pointer;
 	margin-right: auto;
   }
   
-  td,
-  th {
-	border-bottom: 1px solid rgb(160 160 160);
-   background-color: #4dccc6;
-	padding: 4px 5px;  /*top right bottom left*/
-  }
-  
+ 
   
   .wrapper {
 	width: 250px;
