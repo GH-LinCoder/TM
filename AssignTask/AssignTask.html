@@ -26,29 +26,33 @@
         <form onsubmit="event.preventDefault()">
         <h2>Assign task</h2>
           
-         <div class="field-wrapper"> 
-          <input type="button" class="button" value="get student Id" onclick="getStudentId()">
-            <input type="number" min="1" max="99999" name="studentId" id="studentId" placeholder="or enter Id"required>
+         <div class="getId"> <span class="showDataStudent">Student</span>
+          <input type="number" min="1" max="9999" name="studentId" id="studentId" placeholder="enter Id" required>
+          <a href="../Dashboard/people.html" class="link">or get Id</a>
+
           </div>        
-          <div class="field-wrapper">
-            <input type="button" class="button" value="get task Id" onclick="getStudentId()">
-            <input type="number" min="1" max="99999" name="taskTHId" id="taskTHId"  placeholder="or enter Id" required>
+          <div class="getId"><span class="showDataManager">Manager</span>
+            <input type="number" min="1" max="9999" name="managerId" id="managerId" placeholder="enter Id" required>
+            <a href="../Dashboard/people.html" class="link">get Id</a>
           </div>
-          <div class="field-wrapper">
-            <input type="button" class="button" value="get manager Id" onclick="getStudentId()">
-            <input type="number" min="1" max="99999" name="managerId" id="managerId" placeholder="or enter Id" required>
-            <label></label>           
+          <div class="getId"><span class="showDataTask">Task</span>
+            <input type="number" min="1" max="9999" name="taskTHId" id="taskTHId"  placeholder="enter Id" required>
+
+            <a href="../Dashboard/Tasks.html" class="link">or get Id</a>
+                      
             </div>
           
           <div class="field-wrapper">
-            <div class="field-wrapper">
-            <input type="text" name="stageText" id="stageText" placeholder="Any stageText?">
-            <label>stageText?</label>
-            </div>
-            <input type="submit" onclick="assignTask()">
+            
+            <input type="submit" value="AssignTask()" onclick="assignTask()">
           </div>
                 <form onsubmit="event.preventDefault()">   <!--???-->
         </form>
+        <div> 
+        <span class='rowDataStudent' id='rowDataStudent'>S</span>
+        <span class='rowDataManager' id='rowDataManager'>M</span>
+        <span class='rowDataTask' id='rowDataTask'>T</span>
+       </div>
        </div>
     </div>  
  

@@ -2,13 +2,31 @@ let prism = document.querySelector(".rec-prism");
 const logToConsole=true;
 //const logToConsole=false; 
 
+var remember=[];
+
 console.log('assigntask.html')
+showAssign();
+loadSESSIONArray();//this may have lots of members & tasks in it or be empty.
+
+
+
+
+
+
 
 
 function showAssign(){
   if(logToConsole) console.log('showAssign()');
   prism.style.transform = "translateZ(-100px)";
-  document.getElementById("panel").innerHTML="If you have permission you can select someone to do a task.<br> That person is called <i>student</i>";
+  document.getElementById("panel").innerHTML="<p>If you have permission you can select someone to do a task.</p>" 
+  +"That person is called the <i> student </i>. "
+  +"<p>The member who supervises or helps the student is called the <i>Manager</i></p>"
+  +"<p>Clicking the <b>get student id</b> or <b>get manager id</b> buttons redirects you to the people page"
+  +" where you can remember a member as student & then select a member as manager.</p>"
+  +"<p>Clicking the <b>get task id</b> button redirects you to the tasks page where you can click <b>remember this</b> as task."
+  +" You need to either remeber the member id & task id or click the <b> remember this </b> button for each item (student, manager, task).</p>"
+  +"After clicking you have to return to the assign task page (All links are in the menu item Manage)."
+  +"<p>Hover over the labels 'Student', 'Manager' or 'Task' to see their names appear below the button</p><i>If you input a number the display still shows the last remembered name</i> ";
 
 }
 
@@ -46,6 +64,63 @@ function showThankYou(){
 
 ///////////////////////////////////////////////////                                         get id (student, task, manager)
 
+function isSESSIONLoaded(){
+  if(logToConsole) console.log('isSESSIONLoaded()');  
+//read the SESSION to see if there are stored members or tasks
+//NOT USED
+return true//if there are stored values ?
+//could be several different ones. How select?
+}
+
+
+function loadFormFromArray(){
+  if(logToConsole) console.log('loadFormFromArray()');
+//HOW?
+for(i=0;i<remember.length;i+=2){
+
+  switch (remember[i]) {
+    case 'as Student': document.getElementById('studentId').value=remember[i+1].MId ; 
+    document.getElementById('rowDataStudent').innerText='Student:'+remember[i+1].MUserName;
+    break;
+    case 'as Manager': document.getElementById('managerId').value=remember[i+1].MId ; 
+    document.getElementById('rowDataManager').innerText='Manager:'+remember[i+1].MUserName;
+    break;
+    case 'as Task': document.getElementById('taskTHId').value=remember[i+1].THId ; 
+    document.getElementById('rowDataTask').innerText='Task:'+remember[i+1].TaskName;
+    break;
+    default: console.log('default: '+remember[i]); break;
+  }
+ console.log('Item ',i/2+1,' of ', remember.length/2,' items', 'Remember as ',remember[i], remember[i+1]);
+ } 
+
+}
+
+
+function rememberProcess(remember){
+  if(logToConsole) console.log('RememberProcess()');
+for(i=0;i<remember.length;i+=2){
+  console.log('Item ',i/2+1,' of ', remember.length/2,' items', 'Remember as ',remember[i], remember[i+1]);}        
+}
+
+function loadSESSIONArray(){
+  if(logToConsole) console.log('loadSESSIONArray()');
+  fetch('../QueryDb/loadSESSIONArray.php')
+  .then(response => response.json())
+  .then(result => {
+      // Use the result
+     // console.log('result[0]='+result[0]);
+     remember=result;
+   //  rememberProcess(remember);
+     loadFormFromArray();
+      //store the session data in the local remember[]
+        //when empty the session var? when empty remember?
+  })
+  .catch(error => {
+      console.error('Error loadSESSIONArray:', error);
+  });
+  }
+
+
 function getStudentId() {
   if(logToConsole) console.log('getSudentId()');
   // needs to call the member display and have that return the clicked value. 
@@ -56,7 +131,7 @@ function getStudentId() {
   //somehow store those three values & return them for assignment
 //functions are in script for dashboard (summary)
   //script.js:1296 
-
+//just redirect to the people.html to get the member id ???
 let assignment={
   student: '',
   task:'',
@@ -101,7 +176,7 @@ showTaskColor();
 
 function assignTask(){
   if(logToConsole) console.log('AssignTask()');
-  prism.style.transform = "translateZ(-100px) rotateX( 90deg)";
+ // prism.style.transform = "translateZ(-100px) rotateX( 90deg)";//shows confirmed
 
   /* read form input & create string of associated array  label=value   to send to server*/
   var str, 
@@ -116,7 +191,7 @@ function assignTask(){
   str+="&managerId="+ managerId;
   //str+="&stageText="+stageText;
   
-  document.getElementById("panel").innerHTML="js createStage has str=<br>  "+str +"<p>";
+//  document.getElementById("panel").innerHTML="js createStage has str=<br>  "+str +"<p>";
   /* string prepared to send to server. Has been displayed in 'panel' for user feedback */
   
   /*Open request to server*/
@@ -141,7 +216,7 @@ function assignTask(){
     //need to prevent send if missing input (need to validate the input NOT YET IMPLEMENTED)
     if (studentId=="" || taskTHId=="" || managerId=="") { 
       document.getElementById("panel").innerHTML="Can't send to database because of lack of input(BAD nulls)<br>  ";  
-    } else {document.getElementById("panel").innerHTML="js assignTask has no nullS=<br>  ";
+    } else {document.getElementById("panel").innerHTML="Inputs being sent<br>  ";
     
   
       request.open("POST", "insert_assignTask.php", true);
