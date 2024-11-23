@@ -5,10 +5,10 @@ echo "<p> <i>PHP file called: insert_taskstage.php </i> which echo:<br>";
 //5
 //echo "empty?".empty($_POST)."<";
 
-$stage_name = $_POST['stage_name'];
+$stage_name = htmlspecialchars( $_POST['stage_name']);
 echo "<strong>". $stage_name . "</strong></p>";
 //10
-$stage_description = $_POST['stage_description'];
+$stage_description = htmlspecialchars( $_POST['stage_description']);
 echo "<strong>". $stage_description . "</strong></p>";
 
 $stage_number = $_POST['stagen'];

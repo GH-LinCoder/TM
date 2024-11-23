@@ -3,11 +3,13 @@ include '../Connect_T&M.php';
 //echo "<script> alert('Hello from PHP!'); </script>";  //fails but that code works inside html
 //echo "<p> <i>PHP file called: insert_taskheader.php </i> which echo:<br>";
 
-$name = $_POST['userName']; //odd can't change this to taskName. Error unidentified array index
+$name = htmlspecialchars( $_POST['userName']); //odd can't change this to taskName. Error unidentified array index
 //echo '<strong>'. $name . '</strong></p>';
-$desc = $_POST['desc'];
+$desc = htmlspecialchars($_POST['desc']);
 //echo '<strong>'. $desc . '</strong></p>';
 $taskFaq = $_POST['taskFaq'];
+$taskFaq =filter_var($taskFaq, FILTER_VALIDATE_URL);
+
 //echo '<strong>'. $taskFaq . '</strong></p>';
 
 
