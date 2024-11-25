@@ -70,17 +70,22 @@
             <label>Describe Stage</label>
           </div>
 
-          <div class="field-wrapper">
-            <input type="number" min="1" max="9999" name="stage_number" id="stage_number" placeholder="Stage #" required>
-            <label></label>           
-            </div>
 
-          <div class="field-wrapper">
-            <input type="number" min="1" max="9999" name="task_THId" id="task_THId" placeholder="Task #" required>
-            <label></label> 
-            <input type="number" min="1" max="9999" name="stage_author" id="stage_author" placeholder="Author #" required>
-            <label></label>
-          </div>          
+          <div class="getId"> <span class="showDataStage">Stage #</span>
+            <input type="number" min="1" max="9999" name="stage_number" id="stage_number" placeholder="enter Id" required>
+           <a href="../Dashboard/Tasks.html?func=Task";>or get Id</a>
+          </div>
+
+          <div class="getId"> <span class="showDataTask">Task # </span>
+            <input type="number" min="1" max="9999" name="task_THId" id="task_THId" placeholder="enter id" required>
+            <a href="../Dashboard/Tasks.html?func=Task" class="link">or get Id</a>
+          </div>
+
+          <div class="getId"> <span class="showDataAuthor">Author</span>
+            <input type="number" min="1" max="9999" name="stage_author" id="stage_author" placeholder="enter Id" required>
+            <a href="../Dashboard/People.html?func=Members" class="link">or get Id</a>
+          </div>
+       
 
           <div class="field-wrapper">
          
@@ -88,6 +93,12 @@
           </div>
                 <form onsubmit="event.preventDefault()">         
         </form>
+        <div> 
+          <span class='rowDataStage' id='rowDataStage'>S</span>
+          <span class='rowDataAuthor' id='rowDataAuthor'>A</span>
+          <span class='rowDataTask' id='rowDataTask'>T</span>
+        </div> 
+
        </div>
     </div>
 

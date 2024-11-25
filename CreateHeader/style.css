@@ -210,3 +210,30 @@ small {
     -webkit-transform: translate(-50%, -50%) rotate(-45deg) scale(1);
   }
 }
+
+
+.getId{
+
+  padding:3px;
+  margin-top: 10px;
+  position: relative
+  }
+  
+  .rowDataStage, .rowDataAuthor, .rowDataTask{
+    visibility: hidden;
+  }
+  
+  .showDataStage:hover,.showDataAuthor:hover,.showDataTask:hover{
+    background-color:lightgrey;
+  }
+  
+  body:has(.showDataTask:hover) .rowDataTask{
+    visibility:visible;
+  }
+  body:has(.showDataAuthor:hover) .rowDataAuthor{
+    visibility:visible;
+  }
+  body:has(.showDataStage:hover) .rowDataStage{
+    visibility:visible;
+  }
+  
