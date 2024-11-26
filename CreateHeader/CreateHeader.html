@@ -36,9 +36,10 @@
             <label>URL for more details (optional)</label>
           </div>
 
-          <div class="field-wrapper">
-            <input type="number" min="1" max="9999" name="author" id="author" placeholder="Author #" required>
-            <label></label>
+          <div class="field-wrapper">Author
+            <input type="number" min="1" max="9999" name="author" id="author" placeholder="enter id" required>
+            <a href="../Dashboard/Tasks.html?func=Task";>or get Id</a>
+            
           </div>
           <div class="field-wrapper">
             <input type="submit" 
@@ -108,15 +109,21 @@
         <h2>Edit Current Header</h2>
          <form onsubmit="event.preventDefault()">
           <div class="field-wrapper">
-            <input type="text" name="name" placeholder="Name the task">
+          <div class="getId"> <span class="showDataTask">Task # </span>
+            <input type="number" min="1" max="9999" name="header_THId" id="header_THId" placeholder="enter id" required>
+            <a href="../Dashboard/Tasks.html?func=Task" class="link">or get Id</a>
+          </div>
+        </div>
+          <div class="field-wrapper">
+            <input type="text" name="name" id="taskName" placeholder="Name the task">
             <label>Name task</label>
           </div>
           <div class="field-wrapper">
-            <input type="text" name="describe" placeholder="description" >
+            <input type="text" name="taskDesc" id="taskDesc" placeholder="description" >
             <label>Describe</label>
           </div>
           <div class="field-wrapper">
-            <input type="text" name="author" placeholder="Author">
+            <input type="text" name="author" id="taskAuthor" placeholder="Author">
             <label>Author</label>
           </div>
           <div class="field-wrapper">
@@ -135,23 +142,34 @@
      
         
          <div class="field-wrapper">
-            <input type="text" name="task_SId" id="task_SId" placeholder="Task SId">
-            <label>Task THId</label>
-          </div>          
+
+          <div class="getId"> <span class="showDataTask">Task </span>
+            <input type="number" min="1" max="9999" name="headerTHId" id="headerTHId" placeholder="enter id" required>
+            <a href="../Dashboard/Tasks.html?func=Task" class="link">or get Id</a>
+          </div>
+
+          <div class="getId"> <span class="showDataTask">Stage</span>
+            <input type="number" min="1" max="9999" name="stageSId" id="stageSId" placeholder="enter id" required>
+            <a href="../Dashboard/Tasks.html?func=Task" class="link">or get Id</a>
+          </div>
+
+        </div>          
           
          <div class="field-wrapper">
-            <input type="text" name="stage_name" id="stage_name"  placeholder="Name the stage">
+            <input type="text" name="stageName" id="stageName"  placeholder="Name the stage">
             <label>Name of stage</label>
           </div>
           
         <div class="field-wrapper"> 
             <input type="text" name="stage_description" id="stage_description" placeholder="Describe stage">
-            <label>Describe Stage</label>
+            <label>Description</label>
           </div>
           <div class="field-wrapper">
             <div class="field-wrapper">
-            <input type="text" name="Author_name" id="Author_name" placeholder="Name the task">
-            <label>Author</label>
+              <div class="getId"> <span class="showDataTask">Author</span>
+                <input type="number" min="1" max="9999" name="authorId" id="authorId" placeholder="enter id" required>
+                <a href="../Dashboard/Tasks.html?func=People" class="link">or get Id</a>
+              </div>
           </div>
             <input type="submit" onclick="showThankYou()">
           </div>
