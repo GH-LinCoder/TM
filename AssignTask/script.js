@@ -185,7 +185,7 @@ function assignTask(){
   managerId= encodeURIComponent(document.getElementById("managerId").value);
   //stageText= encodeURIComponent(document.getElementById("stageText").value);
   
-  document.getElementById("panel").innerHTML="js assignTask "; 
+  document.getElementById("panel").innerHTML="assignTask() "; 
   str="studentId="+ studentId;
   str+="&taskTHId="+ taskTHId;
   str+="&managerId="+ managerId;
@@ -203,12 +203,13 @@ function assignTask(){
   
     if (this.readyState == 4 && this.status == 200){
     
-    document.getElementById("panel").innerHTML+="<br> CreateTaskheader, this.responseText:<br> "+ request.responseText +"<br>";
-    var str2= document.getElementById("panel").innerHTML;
-    var found =str2.indexOf("id");
-    document.getElementById("panel").innerHTML+="JS Position of last_id:"+found+"<br>";//does nothing when includes +found if outside this asynchronous function
-    last_id=str2.slice(found+3);
-    document.getElementById("panel").innerHTML+=last_id;//+3 to ignore  id=
+    document.getElementById("panel").innerHTML+='<br>'+request.responseText +"<br>";
+//    document.getElementById("panel").innerHTML+="<br> Assign Task, this.responseText:<br> "+ request.responseText +"<br>";
+    //    var str2= document.getElementById("panel").innerHTML;
+//    var found =str2.indexOf("id");
+//    document.getElementById("panel").innerHTML+="JS Position of last_id:"+found+"<br>";//does nothing when includes +found if outside this asynchronous function
+//    last_id=str2.slice(found+3);
+//    document.getElementById("panel").innerHTML+=last_id;//+3 to ignore  id=
   } 
      
   }
@@ -216,7 +217,7 @@ function assignTask(){
     //need to prevent send if missing input (need to validate the input NOT YET IMPLEMENTED)
     if (studentId=="" || taskTHId=="" || managerId=="") { 
       document.getElementById("panel").innerHTML="Can't send to database because of lack of input(BAD nulls)<br>  ";  
-    } else {document.getElementById("panel").innerHTML="Inputs being sent<br>  ";
+    } else {document.getElementById("panel").innerHTML+="Inputs being sent<br>  ";
     
   
       request.open("POST", "insert_assignTask.php", true);

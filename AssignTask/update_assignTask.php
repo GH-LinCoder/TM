@@ -1,8 +1,9 @@
 <?php
 include '../Connect_T&M.php';
 echo "<p> <i>PHP file called: insert_taskstage.php </i> which echo:<br>";
-//
-//5
+//update stage means moving a student to the next stage of a task. This code isn't good enough
+//It probably needs to check that the next stage exists & perhaps that it is 1 greater than the current stage recorded
+//also use prepared statements
 //echo "empty?".empty($_POST)."<";
 
 $TLId = $_POST['TLId'];
