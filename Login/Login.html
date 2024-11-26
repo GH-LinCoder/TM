@@ -28,15 +28,15 @@
         <h2>Login in</h2>
         <form onsubmit="event.preventDefault()">
           <div class="field-wrapper">
-            <input type="text" name="username" placeholder="username">
+            <input type="text" name="userName" id="userName" placeholder="user name">
             <label>username</label>
           </div>
           <div class="field-wrapper">
-            <input type="password" name="password" placeholder="password" autocomplete="new-password">
+            <input type="password" name="password" placeholder="password" id="password" >
             <label>password</label>
           </div>
           <div class="field-wrapper">
-            <input type="submit" onclick="showThankYou()">
+            <input type="submit" onclick="login()">
           </div>
           <span class="psw" onclick="showForgotPassword()">Forgot Password?   </span>
           <span class="signup" onclick="showSignup()">Not a user?  Sign up</span>
@@ -51,13 +51,14 @@
         <h2>Sign up</h2>
         <form onsubmit="event.preventDefault()">
           <div class="field-wrapper">
-            <input type="text" id="email" name="email" placeholder="email">
+            <input type="text" id="email" name="email" placeholder="email" required>
             <label>e-mail</label>
           </div>
           <div class="field-wrapper">
-            <input type="text" id="name" name="userName" placeholder="User name">
+            <input type="text" id="name" name="userName" placeholder="User name" required>
             <label>Choose a user name</label>
           </div>
+          <!-- will need password somwhere   autocomplete="new-password" -->
           <div class="field-wrapper">
             <input type="submit" onclick="signUp()">
           </div>
@@ -74,11 +75,11 @@
     <small>Enter your email so we can send you a reset link for your password</small>
     <form onsubmit="event.preventDefault()">
       <div class="field-wrapper">
-        <input type="text" name="email" placeholder="email">
+        <input type="text" name="email" id="emailForgotPassword" placeholder="email">
         <label>e-mail</label>
       </div>
       <div class="field-wrapper">
-        <input type="submit" onclick="showThankYou()">
+        <input type="submit" onclick="forgotPassword()">
       </div>
     </form>
   </div>
@@ -110,19 +111,19 @@
         <h2>Contact us</h2>
         <form onsubmit="event.preventDefault()">
           <div class="field-wrapper">
-            <input type="text" name="name" placeholder="name">
+            <input type="text" name="name" id='messageName' placeholder="user name">
             <label>Name</label>
           </div>
           <div class="field-wrapper">
-            <input type="text" name="email" placeholder="email">
+            <input type="text" name="email" id= "messageEmail" placeholder="email">
             <label>e-mail</label>
           </div>
           <div class="field-wrapper">
-            <textarea placeholder="your message"></textarea>
+            <textarea placeholder="your message" name="theMessage" id="theMessage"></textarea>
             <label>your message</label>
           </div>
           <div class="field-wrapper">
-            <input type="submit" onclick="showThankYou()">
+            <input type="submit" onclick="sendMessage()">
           </div>
         </form>
       </div>

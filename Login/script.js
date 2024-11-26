@@ -62,15 +62,15 @@ console.log(inputName + " "+inputEmail);
 
 
 
-  document.getElementById("panel").innerHTML="js sign up "; 
- var request= new XMLHttpRequest();
+//document.getElementById("panel").innerHTML="js sign up "; 
+var request= new XMLHttpRequest();
  
 
  //build a string of the above inputs from the web page form. Format it like an indexed array. Separate with &. "label1=" value1 +"&label2=" value2
  str="name="+ inputName;
  str+="&email="+ inputEmail;
  
- document.getElementById("panel").innerHTML="js createStage has str=<br>  "+str +"<p>"; //developer feedback FAILS here but works in other function stage<<<<<<<<<<<<<<
+ //document.getElementById("panel").innerHTML="js createStage has str=<br>  "+str +"<p>"; //developer feedback FAILS here but works in other function stage<<<<<<<<<<<<<<
  
  //the call to the server will be asynchronous & checked for notification of completion. readystate starts at 0 & goes to 4 when complete
  //the server returns a ststus of 200 if the task was run or an error code of 400, 401, 403 
@@ -79,7 +79,7 @@ console.log(inputName + " "+inputEmail);
  
    if (this.readyState == 4 && this.status == 200){
    //must call response text?  Have I left something out? Wierd, if I comment this like out the script fails
-   document.getElementById("panel").innerHTML+="<br> SignUp(), this.responseText:<br> "+ request.responseText +"<br>";
+   document.getElementById("panel").innerHTML+="<br> SignUp()"+ request.responseText +"<br>";
  
   } 
     
@@ -87,8 +87,8 @@ console.log(inputName + " "+inputEmail);
  
  //need to prevent send if missing input (need to validate the input NOT YET IMPLEMENTED)
  if (inputName.length=="" || inputEmail=="") { 
-   document.getElementById("panel").innerHTML="Can't send to database because of lack of input(BAD nulls)<br>  ";  
- } else {document.getElementById("panel").innerHTML="js signup() has no nullS=<br>  ";
+   document.getElementById("panel").innerHTML="Can't send to database because of lack of input<br>  ";  
+ } else {//document.getElementById("panel").innerHTML="js signup() has no nullS=<br>  ";
  
  request.open("POST", "insert_member.php", true);
  //the serve needs some extra data
@@ -125,4 +125,34 @@ console.log('fetchDbSingle: '+str);
       });
   }
 
+}
+
+function sendMessage(){
+  if(logToConsole) console.log('sendMessage()');
+  userName= encodeURIComponent(document.getElementById("messageName").value) ;
+  userEmail= encodeURIComponent(document.getElementById("messageEmail").value);
+  theMessage= encodeURIComponent(document.getElementById("theMessage").value);
+
+  console.log(`Form: ${userName} ${userEmail} ${theMessage}`);
+
+  document.getElementById("panel").innerHTML="There currently is no code to handle messages but thank you for venting";
+
+}
+
+function forgotPassword(){
+  if(logToConsole) console.log('forgotPassword()');
+  userEmail= encodeURIComponent(document.getElementById("emailForgotPassword").value);
+  
+  console.log(`Form: ${userEmail}`);
+
+  document.getElementById("panel").innerHTML="There currently is no code to handle forgotten password as there are no passwords";
+
+}
+
+function login(){
+  if(logToConsole) console.log('login()');
+  userName= encodeURIComponent(document.getElementById("userName").value) ;
+  userPassword= encodeURIComponent(document.getElementById("password").value);
+  console.log(`Form: ${userName} ${userPassword}`);
+  document.getElementById("panel").innerHTML="There currently is no code to login in. Just act like it was done for now.";
 }
