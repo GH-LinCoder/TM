@@ -123,7 +123,7 @@ body {
   color: #07ad90;
   left: 50%;
   top: 50%;
-  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 .face .thank-you-msg:after {
   position: absolute;
@@ -135,9 +135,9 @@ body {
   border-top: 0;
   left: 50%;
   top: 50%;
-  -webkit-transform: translate(-50%, -50%) rotate(0deg) scale(0);
   transform: translate(-50%, -50%) rotate(0deg) scale(0);
-  -webkit-animation: success ease-in 0.15s forwards;
+  transform: translate(-50%, -50%) rotate(0deg) scale(0);
+  animation: success ease-in 0.15s forwards;
   animation: success ease-in 0.15s forwards;
   animation-delay: 2.5s;
 }
@@ -201,12 +201,12 @@ small {
   font-size: 0.7em;
 }
 
-@-webkit-keyframes success {
+keyframes success {
   from {
-    -webkit-transform: translate(-50%, -50%) rotate(0) scale(0);
+    transform: translate(-50%, -50%) rotate(0) scale(0);
   }
   to {
-    -webkit-transform: translate(-50%, -50%) rotate(-45deg) scale(1);
+    transform: translate(-50%, -50%) rotate(-45deg) scale(1);
   }
 }
 /*from candy buttons*/
@@ -260,3 +260,42 @@ button {
   box-shadow: 4px 4px 6px 0 rgba(255, 255, 255, 0.9), -4px -4px 6px 0 rgba(116, 125, 136, 0.2), inset -4px -4px 6px 0 rgba(255, 255, 255, 0.9), inset 4px 4px 6px 0 rgba(116, 125, 136, 0.3);
   transition: all 0.3s ease;
 }
+
+.getId{
+
+padding:3px;
+margin-top: 10px;
+position: relative
+}
+
+.rowDataStudent, .rowDataManager, .rowDataTask{
+  visibility: hidden;
+}
+
+.showDataStage:hover,.showDataAuthor:hover,.showDataTask:hover{
+  background-color:lightgrey;
+}
+
+body:has(.showDataStudent:hover) .rowDataStudent{
+  visibility:visible;
+}
+body:has(.showDataManager:hover) .rowDataManager{
+  visibility:visible;
+}
+body:has(.showDataTask:hover) .rowDataTask{
+  visibility:visible;
+}
+
+
+#taskname, #stagename{
+width:95%;
+height:25px;
+word-wrap: break-word;
+}
+
+#stagedesc{
+  width:95%;
+height:60px;
+word-wrap: break-word;
+}
+

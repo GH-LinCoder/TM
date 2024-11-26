@@ -12,7 +12,7 @@
   <li onclick="showAssign()">Assign</li>
   <li onclick="showEdit()">Edit</li>
   <li onclick="showProgressStudent()">Progress student</li>
-  <li onclick="showSelectTask()">Select Task</li>
+  <!-- li onclick="showSelectTask()">Select Task</li -->
   <li onclick="showManage()">Manage</li>
 </ul>
 <div class="wrapper">
@@ -64,15 +64,25 @@
       
          <div class="field-wrapper">
             <h6>Use the tasklist id to identify the assignment, then buttons to move stage</h6>
-            <input type="number" min="1" max="9999" name="TLId" id="TLId" placeholder="Tasklist Id"required>
+
+            <div class="getId"> <span class="showDataStudent">Tasklist</span>
+              <input type="number" min="1" max="9999" name="TLId" id="TLId" placeholder="Tasklist Id"required>
+              <a href="../Dashboard/people.html" class="link">or get Id</a>
+            </div>        
+            <div class="getId"> <span class="showDataStudent">Student</span>
+              <input type="number" min="1" max="9999" name="TLId" id="stageStudent" placeholder="student Id"required>
+              <a href="../Dashboard/people.html" class="link">or get Id</a>
+            </div>        
+
+
+
             <input type="button" class="button" value="This assigned task - Card #" onclick="thisAssignedTask()">   
 
             <!-- Two buttons to move the student by 1 stage  -->
 
         </div>   
-<!--                If not using the TLId maybe these others could be used                       -->               
+<!--                If not using the TLId maybe these others could be used                                     
           <div class="field-wrapper">
-          <input type="number" min="1" max="9999" name="studentId" id="studentId" placeholder="student Id">
           <input type="number" min="1" max="9999" name="stageId" id="stageId" placeholder="stage Id"> 
          </div>  
           <div class="field-wrapper">
@@ -80,7 +90,7 @@
           <input type="number" min="1" max="9999" name="managerId" id="managerId" placeholder="manager Id">
           <label></label>           
 </div>    
-
+--> 
 
 
         
@@ -124,15 +134,23 @@
         <h2>Edit the assignment</h2>
         <form onsubmit="event.preventDefault()">
          <div class="field-wrapper"> 
-            <input type="number" min="1" max="9999" name="studentId" id="studentId" placeholder="student Id"required>
-          </div>        
-          <div class="field-wrapper">
-            <input type="number" min="1" max="9999" name="taskTHId" id="taskTHId"  placeholder="Task Id" required>
-              <input type="number" min="1" max="9999" name="stageId" id="stageId" placeholder="stage Id" required>
-            <label></label>           
-            </div>          
-          Need to see the details to edit them
-      
+          <div class="getId"> <span class="showDataStudent">Student</span>
+            <input type="number" min="1" max="9999" name="editStudentId" id="editStudentId" placeholder="enter Id" required>
+            <a href="../Dashboard/people.html" class="link">or get Id</a>  
+            <span class="showDataTask">Task</span>
+            <input type="number" min="1" max="9999" name="task-THId" id="task-THId"  placeholder="enter Id" required>
+            <a href="../Dashboard/Tasks.html" class="link">or get Id</a>
+          <span class="showDataTask">Stage</span>
+            <input type="number" min="1" max="9999" name="edit-SId" id="edit-SId"  placeholder="enter Id" required>
+            <a href="../Dashboard/Tasks.html" class="link">or get Id</a>
+          </div> 
+     
+<textarea name="taskname" id="taskname"  placeholder="task name">Task name</textarea>
+<textarea name="stagename" id="stagename"  placeholder="stage #">Stage name</textarea>
+<textarea name="stagedesc" id="stagedesc"  placeholder="stage #">Stage description</textarea>
+          </div>
+
+  <!--<label for="taskDescription">Task desc</label> <label for="stageNum">stage #</label> <label for="stageName">stage name</label>-->    
           <div class="field-wrapper">
             <input type="submit" onclick="editAssignment()">
           </div>
