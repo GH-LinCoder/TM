@@ -685,7 +685,7 @@ function showRememberMenu(rowData){
  if(document.querySelector('#rememberMenu') ) return; //menu already exists
  
     const remember_button = document.querySelector('#remember');
-    const menuHeaders=['EXIT no save', 'as Student', 'as Manager', 'as Author', 'as Task' , 'as Note'];
+    const menuHeaders=['EXIT no save', 'as Student', 'as Manager', 'as Author', 'as Task' , 'as Assigned', 'as Note'];
     menuLu=document.createElement('lu');
     menuLu.id='rememberMenu';
 
