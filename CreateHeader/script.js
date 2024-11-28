@@ -3,6 +3,74 @@ let prism = document.querySelector(".rec-prism");
 const logToConsole=true;
 //const logToConsole=false;
 
+var remember=[];
+
+console.log('CreateHeader.html')
+showCreateHeader();
+loadSESSIONArray();//this may have lots of members & tasks in it or be empty.
+
+function rememberProcess(remember){
+  if(logToConsole) console.log('RememberProcess()');
+for(i=0;i<remember.length;i+=2){
+  console.log('Item ',i/2+1,' of ', remember.length/2,' items', 'Remember as ',remember[i], remember[i+1]);}        
+}
+
+function loadFormFromArray(){
+  if(logToConsole) console.log('loadFormFromArray()');
+//HOW?
+for(i=0;i<remember.length;i+=2){
+
+  switch (remember[i]) {
+    case 'as Student': //document.getElementById('studentId').value=remember[i+1].MId ; 
+    //document.getElementById('rowDataStudent').innerText='Student:'+remember[i+1].MUserName;
+    break;
+    case 'as Manager': //document.getElementById('managerId').value=remember[i+1].MId ; 
+    //document.getElementById('rowDataManager').innerText='Manager:'+remember[i+1].MUserName;
+    break;
+    case 'as Task': document.getElementById('task_THId').value=remember[i+1].THId ;
+    document.getElementById('header_THId').value=remember[i+1].THId;
+    document.getElementById('headerTHId').value=remember[i+1].THId ;
+    document.getElementById('taskName').value=remember[i+1].TaskName ;
+    document.getElementById('taskDesc').value=remember[i+1].TaskDesc ; 
+
+    //document.getElementById('rowDataTask').innerText='Task:'+remember[i+1].TaskName;
+    break;
+    case 'as Author': document.getElementById('author').value=remember[i+1].MId ;
+    document.getElementById('stage_author').value=remember[i+1].MId;
+    document.getElementById('taskAuthor').value=remember[i+1].MId ;
+    document.getElementById('authorId').value=remember[i+1].MId ; 
+    //document.getElementById('rowDataTask').innerText='Task:'+remember[i+1].TaskName;
+    break;
+
+
+    default: console.log('default: '+remember[i]); break;
+  }
+ console.log('Item ',i/2+1,' of ', remember.length/2,' items', 'Remember as ',remember[i], remember[i+1]);
+ } 
+
+}
+
+function loadSESSIONArray(){
+  if(logToConsole) console.log('loadSESSIONArray()');
+  fetch('../QueryDb/loadSESSIONArray.php')
+  .then(response => response.json())
+  .then(result => {
+      // Use the result
+     // console.log('result[0]='+result[0]);
+     remember=result;
+   //  rememberProcess(remember);
+     loadFormFromArray();
+      //store the session data in the local remember[]
+        //when empty the session var? when empty remember?
+  })
+  .catch(error => {
+      console.error('Error loadSESSIONArray:', error);
+  });
+  }
+
+
+
+
 function showCreateHeader(){
   if(logToConsole) console.log('showCreateHeader()');
   prism.style.transform = "translateZ(-100px) "; 
