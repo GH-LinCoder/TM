@@ -42,6 +42,19 @@ for(i=0;i<remember.length;i+=2){
     //document.getElementById('rowDataTask').innerText='Task:'+remember[i+1].TaskName;
     break;
 
+    break;
+    case 'as Stage': document.getElementById('stage_number').value=remember[i+1].TSId ;
+    document.getElementById('stageSId').value=remember[i+1].TSId ;
+    document.getElementById('stageName').value=remember[i+1].StageName ;
+    document.getElementById('stageDescription').value=remember[i+1].StageDesc ;
+//following 2 are in create stage. May be foolish to autofil these
+    document.getElementById('stage_name').value=remember[i+1].StageName ;
+    document.getElementById('stage_description').value=remember[i+1].StageDesc ;
+ //   console.log()
+    //document.getElementById('stage_num').value=remember[i+1].StageNum ;
+
+    //document.getElementById('rowDataTask').innerText='Task:'+remember[i+1].TaskName;
+    break;
 
     default: console.log('default: '+remember[i]); break;
   }
