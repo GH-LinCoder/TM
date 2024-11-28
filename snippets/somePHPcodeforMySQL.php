@@ -1,12 +1,28 @@
 <?php
 /*
-total_entriesVery important that the ` is the top left key on keyboard.
+Very important that the ` is the top left key on UK keyboard.
+(next to P on spanish)
+
 If use the ' (which is on right hand side with @, the SELECT doesn't work.
 Only use around table names NOT when refering to a table.column  ! 
 (The error message will say "Unknown column in field list"
 
 ALTER TABLE `tasksstages` CHANGE `StageDate` `StageDate` TIMESTAMP NOT NULL;
 */
+
+setting a constraint
+
+ALTER TABLE `tasklist` ADD CONSTRAINT `TaskId` FOREIGN KEY (`TaskId`) REFERENCES `tasksheader`(`THId`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+
+mySQL code - posted as a note to myself. Returns the desired row or if deleted it returns the next higher row
+
+SELECT * FROM members
+
+WHERE MId = (SELECT MIN(MId) FROM members WHERE MId > 8); 
+
+
+
 
 127.0.0.1/task&member/tasksstages/		http://localhost:8080/phpmyadmin/index.php?route=/table/sql&db=task%26member&table=tasksstages
 

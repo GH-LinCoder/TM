@@ -1,0 +1,14 @@
+//prepared statements
+
+//SELECT
+
+$stmt = $db->prepare('SELECT * FROM users where name = ? where id = ?');
+$stmt->bind_param('si', $name, $id);
+$stmt->execute();
+
+
+//INSERT
+
+$stmt = $db->prepare("INSERT INTO foo (firstname, lastname, email) VALUES (?, ?, ?)");
+$stmt->bind_param("sss", $firstname, $lastname, $email);
+$stmt->execute();

@@ -1,0 +1,23 @@
+PHP
+
+strip html chars in php
+FILTER
+
+$html = "<p>This is a paragraph.</p>";
+$text = preg_filter("/<[^>]+>/", "", $html);
+echo $text; // Outputs: "This is a paragraph."
+
+
++++++++++++++++++++++++++++++++
+
+Validate email format
+ 
+$email = "user@example.com";
+if (preg_match("/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/", $email)) {
+    echo "Valid email address";
+} else {
+    echo "Invalid email address";
+}
+
+++++++++++++++++++++++++++++++++
+

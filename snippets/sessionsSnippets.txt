@@ -1,0 +1,74 @@
+//POST has a limit to size of data.
+//long urls can be a problem
+//json_encode on the server-side and JSON.stringify in JavaScript.
+
+//javascript to send data to php
+
+function storeSESSIONArray(rowData){
+  if(logToConsole) console.log('storeSESSIONArray()');
+  fetch('../QueryDb/storeSESSIONArray.php', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(rowData)
+})
+.then(response => response.json())
+.then(result => { 
+  console.log(result); // this retrieved the array of 1 row
+    // Handle the server's response
+})
+.catch(error => {
+    console.error('Error:', error);
+});
+}
+
+
+//PHP to receive
+
+session_start();
+
+$data = json_decode(file_get_contents('php://input'), true); //different because json
+
+$_SESSION['my_data'] = $data;
+
+echo json_encode(['message' => 'Data stored successfully']);
+
+//can sanitise with user input before storing it in the array
+$data = array(
+    'THId' => filter_var($_POST['THId'], FILTER_SANITIZE_NUMBER_INT),
+    'TaskName' => htmlspecialchars($_POST['TaskName']),
+    'TaskDesc' => htmlspecialchars($_POST['TaskDesc']),
+    'TaskAuthor' => filter_var($_POST['TaskAuthor'], FILTER_SANITIZE_NUMBER_INT),
+    'TaskFaq' => filter_var($_POST['TaskFaq'], FILTER_SANITIZE_URL), // Sanitize URL
+  );
+  
+  // Check if data is valid (optional)
+  if (empty($data['THId']) || empty($data['TaskName'])) {
+    // Handle invalid data
+  } else {
+    // Store the data in session or send it back to JavaScript
+  }
+
+
+//javascript to retreive data
+
+function loadSESSIONArray(){
+if(logToConsole) console.log('loadSESSIONArray()');
+fetch('loadSESSIONArray.php')
+.then(response => response.json())
+.then(result => {
+    // Use the result
+    console.log(result);
+})
+.catch(error => {
+    console.error('Error:', error);
+});
+}
+
+
+//php retrieve data
+$data = $_SESSION['array'];
+
+echo json_encode($data);
+
