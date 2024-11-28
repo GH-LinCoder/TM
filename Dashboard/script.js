@@ -287,7 +287,7 @@ async function memberByIdForm() {//need get the MId? and pass it on?
 }
 
 async function studentById(key) {//probably doesn't work as it just reads tasklist instead of doing complicated query
-  const str = "keyId=" + key + "&tableName=" + "tasklist" + "&keyName=" + "TLId";
+  const str = "keyId=" + key ;  //+ "&tableName=" + "tasklist" + "&keyName=" + "TLId"
   if(logToConsole) console.log(' studentById() ');
   const dataById = await fetchDbSingle('../QueryDb/QueryDbStudentById.php', str);
   //TableById is generic, doesn't put coliumns in good order & doesn't do foreign key lookup
@@ -297,27 +297,27 @@ async function studentById(key) {//probably doesn't work as it just reads taskli
 }
 
 async function taskById(key) {//need get the MId? and pass it on?
-  const str = "keyId=" + key + "&tableName=" + "tasksheader" + "&keyName=" + "THId";
+  const str = "TaskId=" + key ; //+ "&tableName=" + "tasksheader" + "&keyName=" + "THId"
   if(logToConsole) console.log('taskById:' + str);
-  const dataById = await fetchDbSingle('../QueryDb/QueryDbTableById.php', str);
+  const dataById = await fetchDbSingle('../QueryDb/QueryDbTaskById.php', str);
   //console.log(dataById); //undefined ? Why? & logs BEFORE fetch logs
   buildSingleGenericCard(dataById);
   currentTableByIdFunction = taskById;
 }
 
 async function stagesById(key) {//need get the MId? and pass it on?
-  const str = "keyId=" + key + "&tableName=" + "tasksstages" + "&keyName=" + "TSId";
-  if(logToConsole) console.log('taskById:' + str);
-  const dataById = await fetchDbSingle('../QueryDb/QueryDbTableById.php', str);
+  const str = "TSId=" + key + "&tableName=" + "tasksstages" + "&keyName=" + "TSId";
+  if(logToConsole) console.log('stagesById:' + str);
+  const dataById = await fetchDbSingle('../QueryDb/QueryDbStagesById.php', str);
   //console.log(dataById); //undefined ? Why? & logs BEFORE fetch logs
   buildSingleGenericCard(dataById);
   currentTableByIdFunction = stagesById;
 }
 
 async function tasklistById(key) {//need get the MId? and pass it on?
-  const str = "keyId=" + key + "&tableName=" + "tasklist" + "&keyName=" + "TLId";
-  if(logToConsole) console.log('taskById:' + str);
-  const dataById = await fetchDbSingle('../QueryDb/QueryDbTableById.php', str);
+  const str = "TLId=" + key + "&tableName=" + "tasklist" + "&keyName=" + "TLId";
+  if(logToConsole) console.log('tasklistById:' + str);
+  const dataById = await fetchDbSingle('../QueryDb/QueryDbTasklistById.php', str);
   //console.log(dataById); //undefined ? Why? & logs BEFORE fetch logs
   buildSingleGenericCard(dataById);
   currentTableByIdFunction = tasklistById;
@@ -591,6 +591,10 @@ function chooseWhichCardToUse(rowData){ //A row in a list has been clicked. That
     console.log(itemName);
     buildSingleGenericCard(rowData);
     break; 
+    case "TSId":
+      console.log(itemName);
+      buildSingleGenericCard(rowData);
+      break;     
 
 default: console.log('unknown: '+itemName); buildSingleGenericCard(rowData);
 }
@@ -868,7 +872,7 @@ console.log('rowkey: ',rowKey); // rowkey is placed in the big green box to show
   cell.appendChild(nextItemButton);
 
 
-  /* Close button */
+  /* Close button not yet coded */
 
   let itemNumber = rowKey;
   let currentItem = itemNumber;
