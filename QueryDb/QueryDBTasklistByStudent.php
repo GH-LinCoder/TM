@@ -32,7 +32,16 @@ $sql = "SELECT tasklist.TLId, tasklist.TaskId,tasklist.Stage, tasklist.StudentId
 
     . "INNER JOIN members AS membersMan ON tasklist.ManagerId=membersMan.MId;";
 
+/* other order
+$sql = "SELECT tasksheader.TaskName,tasklist.TaskId, membersSt.MUserName AS Student, tasklist.StudentId,tasklist.Stage,\n"
 
+    . "  membersMan.MUserName AS Manager,  tasklist.ManagerId, tasklist.TLId \n"
+
+    . "FROM `tasklist`\n"
+
+    . "INNER JOIN tasksheader ON tasklist.TaskId=tasksheader.THId\n"
+
+*/
 
 //------------------------------------
 // Run the SQL query. Below is identical in different functions

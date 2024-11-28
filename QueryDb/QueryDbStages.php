@@ -1,4 +1,4 @@
-<?php
+<?php session_start();
 include '../Connect_T&M.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $limit  =min ($limit, $total_rows-$offset);
 
 //the query is different for each function file
- $sql = "SELECT * FROM `tasksstages` LIMIT $limit OFFSET $offset;"; // table name specific
+ $sql = "SELECT StageName, TSId, StageDesc, StageNum, TaskId, StageFaq, StageAuthor, StageDate FROM `tasksstages` LIMIT $limit OFFSET $offset;"; // table name specific
 
 //------------------------------------
 // Run the SQL query. Below is identical in different functions

@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $limit  =min ($limit, $total_rows-$offset);
 
 //the query is different for each function file
-$sql = "SELECT * FROM tasksheader LIMIT $limit OFFSET $offset;";
+$sql = "SELECT TaskName, THId, TaskDesc, TaskAuthor, TaskFaq, TaskDate  FROM tasksheader LIMIT $limit OFFSET $offset;";
 
 //------------------------------------
 // Run the SQL query. Below is identical in different functions
