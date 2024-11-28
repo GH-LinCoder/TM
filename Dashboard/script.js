@@ -203,8 +203,15 @@ function fetchSummary() {
 ////////////////////////////////////////                                      Read a datbase  row              ////////////////////
 
 async function fetchDbSingle(url, str) {
-  const dataToSend = str;
-  if(logToConsole) console.log('fetchDbSingle(' + str +')');
+ const dataToSend = str;
+
+//test made no difference
+//const dataToSend='keyId=1&tableName=members&keyName=MId';
+
+//test  other errors
+//url='../QueryDb/QueryDbAllMembers.php';
+
+  if(logToConsole) console.log('fetchDbSingle(' + url+' '+ str +')');
 
   try {
     const response = await fetch(url, {
@@ -266,8 +273,8 @@ async function fetchDb(url) {
 
 async function memberById(key) {//need get the MId? and pass it on?
   const str = "keyId=" + key + "&tableName=" + "members" + "&keyName=" + "MId";
-    if(logToConsole) console.log(' memberById() ');
-  const dataById = await fetchDbSingle('../QueryDb/QueryDbTableById.php', str);
+    if(logToConsole) console.log(' memberById() '+str);
+  const dataById = await fetchDbSingle('../QueryDb/QueryDbMemberById.php', str);
   console.log(dataById);
   buildSingleGenericCard(dataById);
   currentTableByIdFunction = memberById;
@@ -515,7 +522,7 @@ function populateCardWithRowData(rowData, headers, headersLength){
   makeCardsVisible();
   console.log('row clicked=' + rowData); //
   console.log('headers='+headers);
-  let item = headers[0];
+  let item = headers[0]; //[0] usually a name  [1] usuallyID key
   let value = rowData[item];  // don't use . dot notation for variables
   console.log(item + value);
 
@@ -568,7 +575,7 @@ function chooseWhichCardToUse(rowData){ //A row in a list has been clicked. That
   console.log(rowData);
   headers = Object.keys(rowData);
   headersLength=headers.length;
-  itemName=headers[0];
+  itemName=headers[1];
    switch (itemName) {
     case "StudentId":
     console.log(itemName);
@@ -741,14 +748,15 @@ function buildNewCard(rowData){
   cardKeyTitle.className = 'h8';
   cardKeyTitle.style.position = 'absoloute';
   cardKeyTitle.id = "cardKeyRef";
-  cardKeyTitle.textContent = headers[0];
+  cardKeyTitle.textContent = headers[0]; // label of item name
+  console.log(headers[0], headers[1]); // item name  item ref
 
   cardKeyDiv.appendChild(cardKeyTitle);
 
   // add the unique key reference number 
   let keyContent = document.createElement('div');
   keyContent.id = 'cardKeyTitle';
-  currentValue = rowData[headers[0]];
+  currentValue = rowData[headers[0]];  // first item value - probably a name
   keyContent.textContent = currentValue;
   cardKeyDiv.appendChild(keyContent);
   cardDiv.appendChild(cardKeyDiv);
@@ -821,8 +829,8 @@ let  cardDivNav = document.createElement('div');
   cardKeyTitle.className = 'h6';
   cardKeyTitle.innerText = 'item';
   cell.appendChild(cardKeyTitle);
-  rowKey = rowData[headers[0]];
-
+  rowKey = rowData[headers[1]];  //headers[0] is label of item 0 - probably "MId" or other key. headers[1] is label of name
+console.log('rowkey: ',rowKey); // rowkey is placed in the big green box to show which row is being displayed
   cell = tableTopRow.insertCell(); 
   cell.classList.add('table-cell'); 
   cell.textContent = rowKey;
@@ -1397,7 +1405,8 @@ console.log(typeof(itemToDisplay));
     cell.appendChild(nextItemButton);
   
     /* Close button */
-    rowKey = itemToDisplay[headers[0]];
+    rowKey = itemToDisplay[headers[0]];// 
+    console.log(rowkey);
     let itemNumber = rowKey;
     let currentItem = itemNumber;
 //    showTaskColor(currentItem, itemNumber);
