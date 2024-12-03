@@ -305,10 +305,13 @@ async function thisAssignedTask(){ //This is calling db when data is already in 
       document.getElementById("panel").innerHTML+="Can't send to database because of lack of input(BAD null)<br>  ";  
     } else {document.getElementById("panel").innerHTML+="js reports has no nullS=<br>  ";
       const rowData = await fetchDbSingle("../queryDb/QueryDbAssignedTaskbyTLId.php", str);
+     //const rowData = await fetchDbSingle("../queryDb/QueryDbTasklistById.php", str);
       console.log(rowData);
       document.getElementById("progTask").innerHTML=' Task: '+rowData[0].TaskName;
       document.getElementById("progStudent").innerHTML=' Student: '+rowData[0].Student;
       document.getElementById("progManager").innerHTML=' Manager: '+rowData[0].Manager;
+     // document.getElementById("progStageName").innerHTML=' Manager: '+rowData[0].StageName;
+      
     }
 
 }
