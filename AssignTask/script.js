@@ -10,11 +10,6 @@ loadSESSIONArray();//this may have lots of members & tasks in it or be empty.
 
 
 
-
-
-
-
-
 function showAssign(){
   if(logToConsole) console.log('showAssign()');
   prism.style.transform = "translateZ(-100px)";
@@ -40,7 +35,7 @@ function showEdit(){
 function showProgressStudent(){
   if(logToConsole) console.log('showProgressStudent()');
   prism.style.transform = "translateZ(-100px) rotateY( 90deg)";
-  document.getElementById("panel").innerHTML="If you have permission you can change which stage of the task the student is in.<br>You click the move back/forward buttons to place the student in the relevant stage (step or lesson).";
+  document.getElementById("panel").innerHTML="If you have permission you can change which stage of the task the student is in.<br>You click the (not yet coded) move back/forward buttons to place the student in the relevant stage (step or lesson).";
 }
 
 function showSelectTask(){
@@ -88,6 +83,24 @@ for(i=0;i<remember.length;i+=2){
     case 'as Task': document.getElementById('taskTHId').value=remember[i+1].THId ; 
     document.getElementById('rowDataTask').innerText='Task:'+remember[i+1].TaskName;
     break;
+    case 'as Assigned': 
+    document.getElementById('task-THId').value=remember[i+1].TaskId ; 
+    document.getElementById('editStudentId').value=remember[i+1].StudentId ; 
+    document.getElementById('edit-SId').value=remember[i+1].Stage ;
+
+    document.getElementById('taskname').innerText=remember[i+1].TaskName;
+//    document.getElementById('stagename').innerText=remember[i+1].??; //only has foreign key
+//    document.getElementById('stagedesc').innerText=remember[i+1].??;
+
+document.getElementById('TLId').value=remember[i+1].TLId ; 
+//document.getElementById('stageStudent').value=remember[i+1].StudentId ; 
+document.getElementById('stageMove').value=remember[i+1].Stage ;
+
+document.getElementById("progTask").innerHTML='Task: '+remember[i+1].TaskName;
+    document.getElementById("progStudent").innerHTML='Student: '+remember[i+1].Student +' ['+ remember[i+1].StudentId+']';
+      document.getElementById("progManager").innerHTML='Manager: '+remember[i+1].Manager;
+
+    ;break;
     default: console.log('default: '+remember[i]); break;
   }
  console.log('Item ',i/2+1,' of ', remember.length/2,' items', 'Remember as ',remember[i], remember[i+1]);
@@ -237,24 +250,36 @@ function editAssignment() {
 
 
 /*                                                                           utility connect & send request for a php file                                */
-function XMLRequest($fileURL, str){
-  if(logToConsole) console.log('XMLRequest()');
-  var request= new XMLHttpRequest();
-  request.onreadystatechange = function()
-  {
-    if (this.readyState == 4 && this.status == 200)
-    {
-    //must call response text?  Have I left something out? Wierd, if I comment this like out the script fails
-    document.getElementById("panel").innerHTML=" Db call, this.responseText: "+ request.responseText +"<br>";
+async function fetchDbSingle(url, str){
+  if(logToConsole) console.log('fetchDbSingle()');
+  const dataToSend = str;
+
+  //test made no difference
+  //const dataToSend='keyId=1&tableName=members&keyName=MId';
+  
+  //test  other errors
+  //url='../QueryDb/QueryDbAllMembers.php';
+  
+    if(logToConsole) console.log('fetchDbSingle(' + url+' '+ str +')');
+  
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: dataToSend
+      });
+  
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+  
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      throw error; // Re-throw the error to be handled by the caller
     }
-    
   }
-  //the request is now to be started with method POST, the url of where the PHP script is, & asynchronous=true
-  request.open("POST", $fileURL, true);
-  //the server needs some extra data
-  request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded"); //??????
-  request.send(str); 
-}
 
 
 
@@ -264,13 +289,13 @@ function XMLRequest($fileURL, str){
 
 function dBTasklistByStudent(){
   if(logToConsole) console.log('dbTasklistByStudent()');
-  XMLRequest("../queryDb/QueryDbTasklistByStudent.php");
+  fetchDbSingle("../queryDb/QueryDbTasklistByStudent.php");
 }
 
 
 
 
-function thisAssignedTask(){
+async function thisAssignedTask(){ //This is calling db when data is already in remember
   if(logToConsole) console.log('thisAssignedTask()');
   document.getElementById("panel").innerHTML+=" dBthisAssignedTask() ";
   var TLId = encodeURIComponent(document.getElementById("TLId").value);
@@ -279,7 +304,11 @@ function thisAssignedTask(){
     if (TLId=="") { 
       document.getElementById("panel").innerHTML+="Can't send to database because of lack of input(BAD null)<br>  ";  
     } else {document.getElementById("panel").innerHTML+="js reports has no nullS=<br>  ";
-    XMLRequest("../queryDb/QueryDbAssignedTaskbyTLId.php", str);
+      const rowData = await fetchDbSingle("../queryDb/QueryDbAssignedTaskbyTLId.php", str);
+      console.log(rowData);
+      document.getElementById("progTask").innerHTML=' Task: '+rowData[0].TaskName;
+      document.getElementById("progStudent").innerHTML=' Student: '+rowData[0].Student;
+      document.getElementById("progManager").innerHTML=' Manager: '+rowData[0].Manager;
     }
 
 }

@@ -68,15 +68,29 @@
             <div class="getId"> <span class="showDataStudent">Tasklist</span>
               <input type="number" min="1" max="9999" name="TLId" id="TLId" placeholder="Tasklist Id"required>
               <a href="../Dashboard/people.html" class="link">or get Id</a>
-            </div>        
-            <div class="getId"> <span class="showDataStudent">Student</span>
-              <input type="number" min="1" max="9999" name="TLId" id="stageStudent" placeholder="student Id"required>
-              <a href="../Dashboard/people.html" class="link">or get Id</a>
-            </div>        
+              <input type="button" class="button" value="Get that assignment from Db" onclick="thisAssignedTask()">   
+            
+            
+              <div class="studentDetails">
+              <span class="showDataStudent" id="progStudent">Student:</span>
+              <!-- input type="number" min="1" max="9999" name="stageStudent" id="stageStudent" placeholder="student Id"required -->
+              <!-- a href="../Dashboard/people.html" class="link">or get Id</a ><br-->
+              <!-- a href="../Dashboard/Tasks.html" class="link">or get Id</a -->      
+              <br><span class="showDataTask" id="progTask">Task:</span>            
+             <br> <span class="showDataTask">Stage</span>
+              <input type="number" min="1" max="9999" name="stageMove" id="stageMove" placeholder="stage id"required>
+     
+            </div>         
+            <br><span class="showDataTask" id="progManager">Manager:</span>
+          </div>
 
 
 
-            <input type="button" class="button" value="This assigned task - Card #" onclick="thisAssignedTask()">   
+
+
+
+
+
 
             <!-- Two buttons to move the student by 1 stage  -->
 
