@@ -10,6 +10,14 @@ Only use around table names NOT when refering to a table.column  !
 ALTER TABLE `tasksstages` CHANGE `StageDate` `StageDate` TIMESTAMP NOT NULL;
 */
 
+
+//Read tasklist & get all the data from foreign keys including stageName
+
+SELECT tasklist.TLId, membersSt.MUserName AS Student,tasklist.StudentId, tasksheader.TaskName, tasksstages.StageName, tasklist.Stage, membersMan.MUserName AS Manager, tasklist.ManagerId FROM tasklist INNER JOIN tasksheader ON tasklist.TaskId = tasksheader.THId INNER JOIN members AS membersSt ON tasklist.StudentId = membersSt.MId INNER JOIN members AS membersMan ON tasklist.ManagerId = membersMan.MId INNER JOIN tasksstages ON tasklist.TaskId = tasksstages.TaskId AND tasklist.Stage = tasksstages.StageNum WHERE tasklist.TLId = 5;
+
+
+
+
 setting a constraint
 
 ALTER TABLE `tasklist` ADD CONSTRAINT `TaskId` FOREIGN KEY (`TaskId`) REFERENCES `tasksheader`(`THId`) ON DELETE RESTRICT ON UPDATE RESTRICT;
