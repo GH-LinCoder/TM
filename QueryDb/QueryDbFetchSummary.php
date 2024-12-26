@@ -10,7 +10,7 @@ $sql = "SELECT\n"
 
     . "  (SELECT COUNT(DISTINCT THId) FROM tasksheader) AS countTasksheaders,\n"
 
-    . "  (SELECT COUNT(DISTINCT TSId) FROM tasksStages) AS countTasksStages,\n"
+    . "  (SELECT COUNT(DISTINCT TSId) FROM tasksstages) AS countTasksstages,\n"
 
     . "  (SELECT COUNT(DISTINCT TLId) FROM taskList) AS countTaskList,\n"
 
