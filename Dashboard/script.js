@@ -163,14 +163,14 @@ function putDataInFaces(summaryData) {
 
   if (titleValue == 'people') {
     document.getElementById("totalStudent").value = "Students [" + summaryData[0].countStudents + "]";
-    document.getElementById("totalManagers").value = "Managers [" + summaryData[0].countManagers + "]";
+    document.getElementById("totalManagers").value = "Managers [" + summaryData[0].uniqueManagers + "]";
     document.getElementById("totalMembers").value = "Members [" + summaryData[0].countMembers + "]";
     document.getElementById("totalAuthors").value = "Authors [" + summaryData[0].countAuthors + "]";
   } else //the page is for tasks
   {
-    document.getElementById("totalTasklist").value = "TaskList [" + summaryData[0].countTaskList + "]";
+    document.getElementById("totalTasklist").value = "TaskList [" + summaryData[0].countTasklist + "]";
     document.getElementById("totalTasks").value = "Tasks [" + summaryData[0].countTasksheaders + "]";
-    document.getElementById("totalStages").value = "Stages [" + summaryData[0].countTasksStages + "]";
+    document.getElementById("totalStages").value = "Stages [" + summaryData[0].countTasksstages + "]";
 
     document.getElementById('panel').innerHTML = 'The main numbers from the database. This is the task page <br> Click an entry for details & actions';
   }
@@ -188,7 +188,7 @@ function fetchSummary() {
   fetch(url)
     .then(response => response.json())
     .then(data => {
-      //      console.log(data); // For debugging
+           console.log(data); // For debugging
       summaryData = data;
       putDataInSummary(data);
       putDataInFaces(data);
