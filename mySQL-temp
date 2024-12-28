@@ -1,12 +1,12 @@
-SELECT
-    (SELECT COUNT(DISTINCT tasklist.studentId) FROM tasklist) AS uniqueStudents,
-    (SELECT COUNT(DISTINCT tasklist.managerId) FROM tasklist) AS uniqueManagers,
-    (SELECT COUNT(tasklist.TLId) FROM tasklist) AS countTasklist,
-    (SELECT COUNT(members.MId) FROM members) AS countMembers,
-    (SELECT COUNT(THId) FROM tasksheader) AS countTasks,
-    (SELECT COUNT(DISTINCT Author) FROM (
+
+SELECT 
+(SELECT COUNT(DISTINCT tasklist.studentId) FROM tasklist) AS uniqueStudents, 
+(SELECT COUNT(DISTINCT tasklist.managerId) FROM tasklist) AS uniqueManagers, 
+(SELECT COUNT(members.MId) FROM members) AS countMembers, 
+(SELECT COUNT(tasklist.TLId) FROM tasklist) AS countTasklist, (SELECT COUNT(THId) FROM tasksheader) AS countTasksheaders, (SELECT COUNT(TSId) FROM tasksstages) AS countTasksstages, 
+(SELECT COUNT(DISTINCT Author) FROM (
         SELECT DISTINCT TaskAuthor AS Author FROM tasksheader
         UNION ALL
         SELECT DISTINCT StageAuthor AS Author FROM tasksstages
     )) AS UniqueAuthors
-FROM dual;
+    FROM dual;
