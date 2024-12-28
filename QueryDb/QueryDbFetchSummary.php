@@ -8,27 +8,7 @@ include '../Connect_T&M.php';
 
 
 
-$sql = "SELECT\n"
-
-    . "COUNT(members.MId) AS countMembers,\n"
-
-    . "COUNT(tasksheader.THId) AS countTasksheaders,\n"
-
-    . "COUNT(tasksstages.TSId) AS countTasksstages,\n"
-
-    . "COUNT(tasklist.TLId) AS countTasklist,\n"
-
-    . "COUNT(DISTINCT tasklist.studentId) AS uniqueStudents,\n"
-
-    . "COUNT(DISTINCT tasklist.managerId) AS uniqueManagers\n"
-
-    . "FROM members\n"
-
-    . "LEFT JOIN tasklist ON members.MId = tasklist.studentId\n"
-
-    . "LEFT JOIN tasksheader ON tasksheader.THId = tasklist.TLId\n"
-
-    . "LEFT JOIN tasksstages ON tasksstages.TSId = tasklist.TLId;";
+$sql = "SELECT COUNT(members.MId) AS countMembers, COUNT(tasksheader.THId) AS countTasksheaders, COUNT(tasksstages.TSId) AS countTasksstages, COUNT(tasklist.TLId) AS countTasklist, COUNT(DISTINCT tasklist.studentId) AS uniqueStudents, COUNT(DISTINCT tasklist.managerId) AS uniqueManagers, COUNT(DISTINCT tasksheader.TaskAuthor) AS uniqueAuthors FROM members LEFT JOIN tasklist ON members.MId = tasklist.studentId LEFT JOIN tasksheader ON tasksheader.THId = tasklist.TLId LEFT JOIN tasksstages ON tasksstages.TSId = tasklist.TLId; ";
 
 
 

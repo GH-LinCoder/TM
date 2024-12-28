@@ -144,15 +144,16 @@ for(i=0;i<remember.length;i+=2){
 
 function putDataInSummary(summaryData) {
   //                                          The people related data
+  console.log(summaryData[0].uniqueStudents, summaryData[0].uniqueManagers);
   document.getElementById("memberSummary").value = "Members [" + summaryData[0].countMembers + "]";
-  document.getElementById("studentSummary").value = "Students [" + summaryData[0].countStudents + "]";
-  document.getElementById("managerSummary").value = "Managers [" + summaryData[0].countManagers + "]";
-  document.getElementById("authorSummary").value = "Authors [" + summaryData[0].countAuthors + "]";
+  document.getElementById("studentSummary").value = "Students [" + summaryData[0].uniqueStudents + "]";
+  document.getElementById("managerSummary").value = "Managers [" + summaryData[0].uniqueManagers + "]";
+  document.getElementById("authorSummary").value = "Authors [" + summaryData[0].uniqueAuthors + "]";
 
   //                                            The task related data
   document.getElementById("taskSummary").value = "Tasks [" + summaryData[0].countTasksheaders + "]";
-  document.getElementById("stagesSummary").value = "Stages [" + summaryData[0].countTasksStages + "]";
-  document.getElementById("tasklistSummary").value = "Tasklist [" + summaryData[0].countTaskList + "]";
+  document.getElementById("stagesSummary").value = "Stages [" + summaryData[0].countTasksstages + "]";
+  document.getElementById("tasklistSummary").value = "Tasklist [" + summaryData[0].countTasklist + "]";
 
    document.getElementById('panel').innerHTML = 'The main numbers from the database. This is the people page<br> Click an entry for details & actions';
 
@@ -162,10 +163,11 @@ function putDataInSummary(summaryData) {
 function putDataInFaces(summaryData) {
 
   if (titleValue == 'people') {
-    document.getElementById("totalStudent").value = "Students [" + summaryData[0].countStudents + "]";
+
+    document.getElementById("totalStudent").value = "Students [" + summaryData[0].uniqueStudents + "]";
     document.getElementById("totalManagers").value = "Managers [" + summaryData[0].uniqueManagers + "]";
     document.getElementById("totalMembers").value = "Members [" + summaryData[0].countMembers + "]";
-    document.getElementById("totalAuthors").value = "Authors [" + summaryData[0].countAuthors + "]";
+    document.getElementById("totalAuthors").value = "Authors [" + summaryData[0].uniqueAuthors + "]";
   } else //the page is for tasks
   {
     document.getElementById("totalTasklist").value = "TaskList [" + summaryData[0].countTasklist + "]";
