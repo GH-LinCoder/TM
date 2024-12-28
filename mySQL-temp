@@ -4,5 +4,9 @@ SELECT
     (SELECT COUNT(tasklist.TLId) FROM tasklist) AS countTasklist,
     (SELECT COUNT(members.MId) FROM members) AS countMembers,
     (SELECT COUNT(THId) FROM tasksheader) AS countTasks,
-    (SELECT (SELECT COUNT(DISTINCT tasksheader.TaskAuthor) FROM tasksheader) + (SELECT COUNT(DISTINCT tasksstages.StageAuthor) FROM tasksstages)) AS UniqueAuthors
+    (SELECT COUNT(DISTINCT Author) FROM (
+        SELECT DISTINCT TaskAuthor AS Author FROM tasksheader
+        UNION ALL
+        SELECT DISTINCT StageAuthor AS Author FROM tasksstages
+    )) AS UniqueAuthors
 FROM dual;
