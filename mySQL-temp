@@ -1,0 +1,12 @@
+SELECT COUNT(DISTINCT tasklist.studentId) AS uniqueStudents, 
+ COUNT(DISTINCT tasklist.managerId) AS uniqueManagers,
+ COUNT(tasklist.TLId) AS countTasklist FROM members 
+ LEFT JOIN tasklist ON members.MId = tasklist.studentId LEFT JOIN tasksstages ON tasksstages.TSId = tasklist.TLId;
+
+SELECT COUNT(members.MId) AS countMembers FROM members;
+
+SELECT COUNT(THId) AS countTasks FROM tasksheader;
+
+SELECT (SELECT COUNT(DISTINCT tasksheader.TaskAuthor) FROM tasksheader)+(SELECT COUNT(DISTINCT tasksstages.StageAuthor) FROM tasksstages) AS UniqueAuthors;
+
+SELECT COUNT(THId) AS countTasks FROM tasksheader;
